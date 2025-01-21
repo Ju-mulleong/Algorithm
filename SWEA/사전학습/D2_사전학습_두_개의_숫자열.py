@@ -28,10 +28,18 @@ N과 M은 3이상 20이하이다.
 	A[:] * B[:N] 	# B에서 [0]부터 [4]까지
 	A[:] * B[1:N+1]	# B에서 [1]부터 [5]까지
 	A[:] * B[2:N+2]	# B에서 [2]부터 [6]까지
-	
 
+	리스트 원소끼리 곱하려면 원소의 개수가 같아야 하므로, 더 긴 리스트에서 슬라이싱하여 새로운 리스트 만들기!
+	리스트 컴프리헨션과 zip()사용
+	zip()은 두 리스트의 동일한 인덱스에 있는 원소를 묶어줌.
+	list1 = [1,2,3]
+	list2 = [4,5,6]
 
+	result = [a*b for a,b in zip(list1,list2)]
 
+6. 이렇게 각 i마다 시행한 결과들을 나올때마다 그 전 값과 비교하여 최댓값만 살려서 출력
+
+7. 각 tc별로 반복
 
 
 '''
@@ -40,26 +48,53 @@ sys.stdin = open("inputs/D2_두_개의_숫자열.txt","r")
 
 tc = int(input())	# 맨 위 첫 번째 줄에서 test case 수 받기
 
-N, M = map(int,input().split())
-
-list_A = list(map(int, input().split()))
-list_B = list(map(int, input().split()))
-
-attempts = 0
-
-if N > M :
-	attempts = N - (M-1)
-elif N < M :
-	attempts = M - (N-1)
-else :
-	attempts = 1
 
 
-for i in range(attempts) :
-	print(list_A[:] * list_B[i:attempts+i])
+# print(list_A,list_B)
 
 
 
+for tcn in range(tc) :
+	N, M = map(int,input().split()) # N,M 읽기
+
+	list_A = list(map(int, input().split())) 	# Aj 값 리스트에 저장
+	list_B = list(map(int, input().split()))	# Bj 값 리스트에 저장
+
+	# print(list_A)
+	# print(list_B)
+	attempts = 0
+
+	if N > M :	# N, M 비교하여 시행회수 attempts 구하기기
+		attempts = N - (M-1)
+	elif N < M :
+		attempts = M - (N-1)
+	else :
+		attempts = 1
+
+	try_max = 0
+	result = []
+
+	
+
+	for i in range(attempts) :
+		
+		#list_A[:] * list_B[i:attempts+i]
+		if N < M :
+			result = [a*b for a,b in zip(list_A, list_B[i:len(list_A)+i])]
+		elif N > M :
+			result = [a*b for a,b in zip(list_A[i:len(list_B)+i], list_B)]
+		else :
+			result = [a*b for a,b in zip(list_A, list_B)]
+
+		#print(result)
+		# print(sum(result))
+		if sum(result) > try_max :
+			try_max = sum(result) 
+		#print(try_max)
+	print(f'#{tcn+1} {try_max}')
+	
+
+# 정리 :attempts는 시도횟수고, 얼마만큼의 길이를 slicing 해야하는 지는 순전히 더 짧은 길이의 list만큼이다!!!
 	
 
 
