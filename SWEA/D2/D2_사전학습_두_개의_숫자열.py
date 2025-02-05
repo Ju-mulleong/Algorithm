@@ -44,7 +44,7 @@ N과 M은 3이상 20이하이다.
 
 '''
 import sys
-sys.stdin = open("inputs/D2_두_개의_숫자열.txt","r")
+sys.stdin = open("inputs/두_개의_숫자열_input1.txt", "r")
 
 tc = int(input())	# 맨 위 첫 번째 줄에서 test case 수 받기
 

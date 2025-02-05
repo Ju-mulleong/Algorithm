@@ -1,4 +1,18 @@
 # 알고리즘 공부
 
-- 깃허브와 깃랩 그룹으로 묶어서 둘 다 origin으로 지정.
-- 그냥 git push origin master 하면 깃헙과 깃랩 둘 다에 푸쉬됨
+## 파일 규칙 예시
+```
+D2/
+ ├── solutions/
+ │    ├── 1234.py
+ │    ├── 1234.cpp
+ ├── inputs/
+ │    ├── 1234_input1.txt
+ │    ├── 1234_input2.txt
+ │    ├── 1234_edge1.txt
+ │    ├── 1234_random1.txt
+ │    ├── 5678_input1.txt
+ │    ├── 5678_large1.txt
+ ├── outputs/
+ ├── docs/
+```
