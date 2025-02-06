@@ -37,22 +37,32 @@ for test_case in range(1, 1+T):
     for i in M_list:
         bus_stop[i] = 1
 
-    print(bus_stop)
+    # print(bus_stop)
     now_index = 0
+    max_index = 0
     cnt = 0
-    while True:
+    flag = 1
+    while now_index + K < N:
 
-        for i in range(1, K + 1):     # K만큼 검사
+        for i in range(1, K + 1):     # K개 검사, 제일 먼 충전기의 index = max_index
             if bus_stop[now_index+i] == 1:
-                max_index = now_index+1
+                max_index = now_index + i
+                # print(max_index)
 
-        cnt += 1
-        now_index = max_index
+            if i == K :     # 마지막 K 인덱스까지 완료하면  충전횟수 cnt +1, 현재 now_index를 max_index로 설정
+                if max_index == now_index:  # 마지막 검사까지 했는데 max_index가 변하지 않았을때(충전기 설치를 잘못함)
+                    cnt = 0
+                    flag = 0
+                else :
+                    cnt += 1
+                    now_index = max_index
+
+        if flag == 0:   # flag가 내려가면 while문 빠져나가기
+            break
 
         # print(now_index, cnt)
 
         # print(now_index + K, N)
-        if now_index + K >= N:
-            break
+
 
     print(f'#{test_case} {cnt}')
