@@ -12,7 +12,9 @@ for test_case in range(1, 1+T):
     for i in input():   # num_list에 카드의 숫자들 저장
         num_list.append(int(i))
 
-    print(N, num_list)
+    # 또는 그냥 num_list = list(map(int, input()) 로 해도 됨.
+
+    # print(N, num_list)
 
     # 0부터 9까지 숫자가 적힌 N장의 카드
     # 가장 많은 카드에 적힌 숫자와 총 카드가 몇 장인지 출력
@@ -34,12 +36,12 @@ for test_case in range(1, 1+T):
     for i in range(len(num_list)):    # num_list의 원소들 확인
         # num_list[i]가 4면 cnts[4]의 값 +1
         cnts[num_list[i]] += 1
-    print(cnts)
+    # print(cnts)
 
     most_num_cnt = 0
     most_num = 0
     for i in range(len(cnts)):
-        print(i,cnts[i], most_num)
+        # print(i,cnts[i], most_num)
         if cnts[i] > cnts[most_num]:
             # i가 가장 많은 카드의 숫자
             most_num = i

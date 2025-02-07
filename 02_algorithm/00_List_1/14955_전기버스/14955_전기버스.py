@@ -49,11 +49,11 @@ for test_case in range(1, 1+T):
                 max_index = now_index + i
                 # print(max_index)
 
-            if i == K :     # 마지막 K 인덱스까지 완료하면  충전횟수 cnt +1, 현재 now_index를 max_index로 설정
+            if i == K:     # 마지막 K 인덱스까지 완료하면  충전횟수 cnt +1, 현재 now_index를 max_index로 설정
                 if max_index == now_index:  # 마지막 검사까지 했는데 max_index가 변하지 않았을때(충전기 설치를 잘못함)
                     cnt = 0
                     flag = 0
-                else :
+                else:
                     cnt += 1
                     now_index = max_index
 
@@ -63,6 +63,5 @@ for test_case in range(1, 1+T):
         # print(now_index, cnt)
 
         # print(now_index + K, N)
-
 
     print(f'#{test_case} {cnt}')
