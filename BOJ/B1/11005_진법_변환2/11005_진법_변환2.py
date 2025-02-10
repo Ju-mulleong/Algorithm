@@ -38,7 +38,7 @@ while num >= B:
         r = abc_list[r-10]  # abc_list에서 해당하는 글자 재할당
         ans += r    # 출력값 문자열에 나머지 더하기 (str(str)) 안 하기위해 따로 구분
     
-    else :
+    else:
         ans += str(r)    # 출력값 문자열에 나머지 더하기
     
     num = num // B      # 몫 다시 나눌 값에 할당
