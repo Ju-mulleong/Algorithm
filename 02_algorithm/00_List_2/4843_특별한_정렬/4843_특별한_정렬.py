@@ -60,7 +60,9 @@ for test_case in range(1, 1+T):
     print(f'#{test_case} {ans}')
 
 
-
+'''
+이거 나는 flag로 했는데 그냥 짝수 인덱스를 최댓값, 홀수 인덱스를 최솟값 하는게 더 깔끔한듯
+'''
 
 
 
