@@ -14,8 +14,6 @@ for test_case in range(1, 1+T):
         dict_str1[i] = 0    # str1에 같은 글자 있어도 상관없다.
 
     # str2 순회하여 dict_str1의 key와 같으면 그 키의 value +1 하기기
-    cnt = 0
-    max_cnt = 0
 
     for i in range(len(str2)):
         if str2[i] in dict_str1.keys():

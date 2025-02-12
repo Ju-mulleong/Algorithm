@@ -41,3 +41,7 @@ for test_case in range(1, 1+T):
     # print(cnt)
 
     print(f'#{test_case} {cnt}')
+
+'''
+'회문'이니까 맨 앞글자하고 맨 뒷글자가 같으면 시작하도록 하는게 낫다.
+'''
