@@ -25,6 +25,6 @@ print(max_value_i, max_value_j)
 
 '''
 arr[i][j] > max_value 로 하면
-index가 잘못될수도 있음.
+격자판의 81칸 전부 0 일때 max_value_i, max_value_j 가 업데이트 안 됨. 
 
 '''

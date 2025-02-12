@@ -45,7 +45,7 @@ for lst in arr:
         for _ in range(append_cnt):
             lst.append('')
 
-# 완성된 arr 행 우선순회로 문자열 만들기
+# 완성된 arr을 열 우선순회로 문자열 만들기
 
 ans = ''
 for j in range(max_length):
