@@ -3,6 +3,7 @@ sys.stdin = open('input.txt', 'r')
 
 T = 10
 
+
 def find_p(arr):
     len_p = 0   # 회문의 최대 길이
 
@@ -22,7 +23,6 @@ def find_p(arr):
                         # print(j+d, (len_temp - 1 - j) + d )
                         if arr[i][j + k] != arr[i][(len_temp - 1 - j) + k]:
                             break
-
 
                     else:   # break 없이 j 문 다 마치면(회문이면)
                         len_p = len_temp
@@ -50,7 +50,6 @@ for test_case in range(1, 1+T):
 
     arr = [list(input()) for _ in range(100)]
 
-
     # 100*100의 배열 주어짐
 
     # 어렵게 생각하지말고 N길이 회문, N-1길이 회문... 찾기
@@ -62,10 +61,14 @@ for test_case in range(1, 1+T):
     print(f'#{test_case} {max(max_row, max_column)}')
 
 
+'''
+나는 행마다 회문 100, 99, 98... 해서 구하고, 
+그 다음 행에서 그 회문 길이보다 클 때만 마찬가지로 회문 구했는데,
+그냥 이런것보다 회문 100일때 for i, forj 해서 모든 배열 다 돌리고
+회문 99일때 다 돌리고..
+해서 회문 나오면 바로 return하는게 더 직관적인듯
 
-
-
-
+'''
 
 '''
 len = 7

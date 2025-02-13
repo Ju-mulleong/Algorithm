@@ -17,7 +17,7 @@ for test_case in range(1, 1+T):
     d = 0
     cnt = 0
     for i in range(len(text)):
-        if d > 0 :
+        if d > 0:
             d -= 1
             continue
         for j in range(len(pattern)):

@@ -19,31 +19,9 @@ for test_case in range(1, 1+T):
 
     # 0 5 5 0 이면 봉우리 있는거다!!!!!
 
-    cnt = 0
-    flag = 0
-    for i in range(N):
-        if flag == 1:
-            flag = 0
-            continue
+    # 예외가 너무 많으면 if말고 그냥 while쓰자.
 
-        if i == 0:
-            if N == 1:
-                cnt = 1
-                break
-            if arr[i+1] < arr[i]:
-                cnt += 1
-                flag = 1
-                continue
 
-        elif i == N-1:
-            if arr[i-1] < arr[i]:
-                cnt += 1
-                flag = 1
-                continue
 
-        else:
-            if arr[i-1] < arr[i] and arr[i+1] < arr[i]:
-                cnt += 1
-                flag = 1
 
     print(f'#{test_case} {cnt}')
