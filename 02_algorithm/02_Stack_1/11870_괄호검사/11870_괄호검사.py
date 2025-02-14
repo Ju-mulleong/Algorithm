@@ -15,7 +15,7 @@ for test_case in range(1, 1+T):
     ans = 1
     for i in text:
 
-        if i in '{(':
+        if i in '{(':   # 이건 pythonic한 방법. 일반적인 방법은 or 사용
             top += 1
             stack[top] = i
 
