@@ -17,7 +17,7 @@ i행에 저장
 
 '''
 
-def dfe(v, N):
+def dfs(v, N):
     visited = [0] * (N+1)       # 입력조건 잘 보고 하기
     stack = []
 
