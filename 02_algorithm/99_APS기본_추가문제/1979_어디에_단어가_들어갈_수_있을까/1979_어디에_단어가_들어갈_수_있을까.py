@@ -20,35 +20,44 @@ def solve(arr):
 
     # 단어 가로로 자리 검색
     for i in range(N):
+        flag = 0
         for j in range(N):
-            if arr[i][j] == 1:  # 행 우선 탐색으로 값이 1일때만 탐색
-                for k in range(K):  # 0, 1, 2
-                    if 0 <= j + k <= N - 1:
-                        if arr[i][j + k] != 1:  # 일단 흰 칸이 k칸만큼 연속되어서 단어를 쓸 수 있는가
-                            break  # for k 나가기
-                    else:
-                        break  # for k 나가기
+            if arr[i][j] == 1:
+                flag += 1
+            elif arr[i][j] ==0:
+                flag = 0
+            if flag == K:
+                flag = 0
+                if 0 <= j - K <= N - 1 and arr[i][j - K] == 0:
+                    # 단어 왼쪽 끝-1이 정상인덱스이고 0이라면
+                    if j + 1 == N:  # 오른쪽+1칸이 비정상인덱스라면
+                        cnt += 1
+                        # print(i, j)
+                        continue
+                    elif arr[i][j + 1] == 0:  # 오른쪽도 정상인덱스이고 0이라면
+                        cnt += 1
+                        # print(i, j)
+                        continue
 
-                else:  # 흰칸이 K만큼 연속되어있다면
-                    # 일단 찾은 인덱스 양끝에 j-1, j+K+1이 배열의 범위 내인지 확인
+                elif j - K < 0:  # 단어 왼쪽 끝-1이 비정상인덱스라면
+                    if j + 1 == N:  # 오른쪽 끝 +1이 비정상인덱스라면
+                        cnt += 1
+                        # print(i, j)
+                        continue
 
-                    if 0 <= j - 1 <= N - 1 and arr[i][j - 1] == 0:
-                        # 단어 왼쪽 끝-1이 정상인덱스이고 0이라면
-                        if j+K+1 >= N:      # 오른쪽+1칸이 비정상인덱스라면
-                            cnt += 1
-                        elif arr[i][j + K + 1] == 0:  # 오른쪽도 정상인덱스이고 0이라면
-                            cnt += 1
+                    elif arr[i][j + 1] == 0:  # 오른쪽도 정상인덱스이고 0이라면
+                        cnt += 1
+                        # print(i, j)
+                        continue
 
-                    elif j - 1 < 0:  # 단어 왼쪽 끝-1이 비정상인덱스라면
-                        if j+K+1 >= N:
-                            cnt += 1
 
-                        elif arr[i][j + K + 1] == 0:  # 오른쪽도 정상인덱스이고 0이라면
-                            cnt += 1
+
 
 for test_case in range(1, 1+T):
     N, K = map(int, input().split())
     # N*N 크기의 배열, 단어의 길이 K
+    # lst = list([1] * K)
+    # print(lst)
 
     cnt = 0
     arr = [list(map(int, input().split())) for _ in range(N)]
@@ -56,7 +65,21 @@ for test_case in range(1, 1+T):
     # arr은 N*N 크기의 배열
 
     solve(arr)
-    arr = list(zip(*arr))     # arr전치행렬로 바꾸기
+    arr = [list(x) for x in zip(*arr)]     # arr전치행렬로 바꾸기
+    # pprint.pprint(arr)
+
     solve(arr)
 
     print(f'#{test_case} {cnt}')
+
+'''
+flag쓸거면 제대로 쓰자..
+여기서는 연속으로 1이 K번나와야 하므로 0이 나오면 flag초기화 시켰어야했다.
+
+전치행렬 제대로 쓰기
+zip써야하니까 map처럼 list로 다시 묶어줘야함.
+근데 zip은 튜플로 반환하므로 이걸 리스트로 바꾸려면 언패킹한다음에 다시 list로 묶어줘야함.
+그래서 리스트 컴프리헨션 쓴거
+
+
+'''
