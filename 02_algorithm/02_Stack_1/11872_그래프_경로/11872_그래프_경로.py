@@ -11,6 +11,12 @@ def dfs_matrix(start):      # 출발점만 계속 바뀐다.
             # print(w)
             if w == goal:
                 ans = 1
+                return      # 어차피 답 나왔으니까 return으로 빠져나가버리기
+
+                # 이 문제는 상관없지만, 만약 goal 이후에도 인접하고 아직 방문 안한 노드가 있다면,
+                # 그 노드까지 싹 다 dfs를 하고 오기 때문에 시간 더 오래걸린다.
+                # 이게 가지치기다.
+
                 # return 1은 안되는듯?
 
             dfs_matrix(w)

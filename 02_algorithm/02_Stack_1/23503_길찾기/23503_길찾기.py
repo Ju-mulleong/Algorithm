@@ -1,6 +1,7 @@
 import sys
 sys.stdin = open('input.txt', 'r')
 
+
 def dfs(v, adj_list):
     global ans
     visited[v] = 1  # 방문했으면 visited = 1로 바꿈.
@@ -15,8 +16,6 @@ def dfs(v, adj_list):
             return 0
 
     pass
-
-
 
 
 T = int(input())
