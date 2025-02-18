@@ -32,13 +32,13 @@ def calculate():
             if expr[i] == '+':
                 stack.append(A + B)     # 계산 결과 stack에 push
 
-            if expr[i] == '-':
+            elif expr[i] == '-':
                 stack.append(A - B)     # 계산 결과 stack에 push
 
-            if expr[i] == '*':
+            elif expr[i] == '*':
                 stack.append(A * B)     # 계산 결과 stack에 push
 
-            if expr[i] == '/':
+            elif expr[i] == '/':
                 stack.append(A / B)     # 계산 결과 stack에 push
 
 
