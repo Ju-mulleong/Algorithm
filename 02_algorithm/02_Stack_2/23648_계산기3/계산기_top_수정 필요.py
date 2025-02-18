@@ -55,4 +55,4 @@ for test_case in range(1, 1+T):
                 top += 1
                 stack[top] = op1 * op2
 
-    print(stack[top])
+    print(f'#{test_case} {stack[top]}')

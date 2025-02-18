@@ -14,33 +14,34 @@ def fix_expr(expr):
     icp = {'(': 3, '*': 2, '/': 2, '+': 1, '-': 1}  # in-coming-priority    들어올때 우선순위
     isp = {'(': 0, '*': 2, '/': 2, '+': 1, '-': 1}  # in-stack-priority     스택 안에서 우선순위
     expr_fixed = []
-    global top
     global stack
 
     for token in expr:
         if token not in '(*/+-)':   # token이 피연산자면
             expr_fixed.append(token)
 
-        elif token == ')':     # token이 닫는 괄호라면, 여는 괄호가 나올때가 전부 stack에서 pop하고, token은 버린다, 여는 괄호도 버린다.
-            while stack[top] != '(':
-                expr_fixed.append(stack[top])
-                top -= 1
-            top -= 1    # 여는괄호 버림
+        elif token == ')':
+            # token이 닫는 괄호라면, 여는 괄호가 나올때가 전부 stack에서 pop하고, token은 버린다, 여는 괄호도 버린다.
+            while stack[-1] != '(':
+                expr_fixed.append(stack.pop())
+            stack.pop()    # 여는괄호 버림
 
         else:      #
-            if top == -1 or isp[stack[top]] < icp[token]:  # token이 연산자. top이 -1이거나 token의 우선순위가 더 높거나
-                top += 1
-                stack[top] = token
-            elif isp[stack[top]] >= icp[token]:     # token의 우선순위가 stack[top]보다 작거나 같을 경우.
-                while top > -1 and isp[stack[top]] >= icp[token]:
-                    expr_fixed.append(stack[top])
-                    top -= 1
+            if stack == [] or isp[stack[-1]] < icp[token]:  # token이 연산자. stack이 비었거나 token의 우선순위가 더 높거나
+                stack.append(token)
+            elif isp[stack[-1]] >= icp[token]:     # token의 우선순위가 stack[-1]보다 작거나 같을 경우.
+                while stack != [] and isp[stack[-1]] >= icp[token]:
+                    expr_fixed.append(stack.pop())
                 # while에서 빠져나오면, 즉 stack[top]의 우선순위가 토큰보다 낮아지면 push
-                top += 1
-                stack[top] = token
+                stack.append(token)
 
-    print(expr_fixed)
-    print(stack)
+    # stack에 남은 연산자 모두 pop하여 expr_fixed에 append한다.
+    while stack:
+        expr_fixed.append(stack.pop())
+
+
+    # print(expr_fixed)
+    # print(stack)
     return expr_fixed
 
     # 여기까지 끝나면, 자연스럽게 stack이 빈다.?
@@ -49,31 +50,23 @@ def fix_expr(expr):
 
 # 후위 표기식을 계산
 def calculate_expr(expr_fixed):
-    global top
     global stack
     for token in expr_fixed:
         if token not in '+-/*':     # token이 피연산자면 stack에 push
-            top += 1
-            stack[top] = int(token)
+            stack.append(int(token))
         else:   # token이 연산자면, stack에서 2개 pop한다.
-            op2 = stack[top]    # pop()
-            top -= 1
-            op1 = stack[top]    # pop()
-            top -= 1
+            op2 = stack.pop()    # pop()
+            op1 = stack.pop()    # pop()
             if token == '+':  # op1 + op2
-                top += 1  # push()
-                stack[top] = op1 + op2
+                stack.append(op1 + op2)
             elif token == '-':
-                top += 1
-                stack[top] = op1 - op2
+                stack.append(op1 - op2)
             elif token == '/':
-                top += 1
-                stack[top] = op1 / op2
+                stack.append(op1 / op2)
             elif token == '*':
-                top += 1
-                stack[top] = op1 * op2
+                stack.append(op1 * op2)
 
-    return stack[top]
+    return stack.pop()
 
 
 for test_case in range(1, 1+T):
@@ -82,8 +75,7 @@ for test_case in range(1, 1+T):
     expr = list(input())    # 중위 표기식 expr
     # print(expr)
 
-    stack = [0] * 100
-    top = -1
+    stack = []
 
     ans = calculate_expr(fix_expr(expr))      # calculate_expr(expr_fixed)
 
