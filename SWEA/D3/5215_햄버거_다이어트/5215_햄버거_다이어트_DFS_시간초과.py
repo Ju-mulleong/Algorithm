@@ -1,5 +1,5 @@
-import sys
-sys.stdin = open('input.txt', 'r')
+# import sys
+# sys.stdin = open('input.txt', 'r')
 
 
 # 백트래킹 함수 작성
