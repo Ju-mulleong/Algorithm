@@ -17,7 +17,6 @@ def find_most_preferred_hamburger(n, k, point_sum, kcal_sum, banned_set):
     if temp_sum <= max_sum:
         return
 
-
     # 매 조합마다 최대점수 업데이트
     if point_sum > max_sum:
         max_sum = point_sum
