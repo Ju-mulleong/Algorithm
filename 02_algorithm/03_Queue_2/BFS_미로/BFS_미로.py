@@ -1,3 +1,7 @@
+import sys
+sys.stdin = open('input.txt', 'r')
+
+
 def bfs(i, j, N):       # 시작위치 i, j, 크기 N
     visited = [[0]*N for _ in range(N)]     # visited 생성
     q = []                                  # 큐 생성
