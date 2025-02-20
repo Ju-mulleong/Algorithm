@@ -46,3 +46,8 @@ for test_case in range(1, 1+T):
     # 맨 앞의 숫자니까 비어있는 프론트보다 한 스텝 더 가야한다 (front+1)%len(circular_Q)
     print(f'#{test_case} {circular_Q[(front+1) % len(circular_Q)]}')
 
+'''
+사실 그냥 Queue만들어서 deQueue, enQueue 반복하고
+마지막에 deQueue해서 출력하면 된다.
+
+'''
