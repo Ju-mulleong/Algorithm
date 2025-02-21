@@ -47,10 +47,7 @@ def dfs(i, j):
                     dfs(ni, nj)
                     # 갔다가 돌아오면 그 갔다왔던 방향 밴
 
-
         return
-
-
 
 
 T = int(input())
