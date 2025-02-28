@@ -55,17 +55,34 @@ def dfs(i, j):
         if 0 <= ni <= N-1 and 0 <= nj <= N-1:
 
             if arr[i][j] > arr[ni][nj]:
-                visited[ni][nj] = visited[i][j] + 1
+                # 원복하기 위해 저장
+                reversal = visited[ni][nj]
+
+                # 최댓값으로 업데이트
+                visited[ni][nj] = max(visited[i][j] + 1, visited[ni][nj])
                 dfs(ni, nj)
+                # 원복
+                visited[ni][nj] = reversal
 
             else:
                 if arr[ni][nj]-K < arr[ni][nj] and flag == 1:
                     # 깎을 수 있다면 일단 깎기.
-                    flag = 0
-                    dfs(ni, nj)
 
-                else:   # 더 이상 갈 수 없다면, 최댓값과 비교해서 업데이트
-                    if arr[i][j]
+                    # 깎을 수 있는 경우의 수
+                    for dig in range(1, K+1):
+                        arr[ni][nj] -= dig
+                        flag = 0
+                        # 원복하기 위해 저장
+                        reversal = visited[ni][nj]
+
+                        # 최댓값으로 업데이트
+                        visited[ni][nj] = max(visited[i][j] + 1, visited[ni][nj])
+                        dfs(ni, nj)
+                        # 원복
+                        visited[ni][nj] = reversal
+                else:
+                    continue
+    return
 
 
 T = int(input())

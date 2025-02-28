@@ -10,7 +10,7 @@ def find_tank():
                 return ii, jj
 
 
-T = int(input())    # 테스크 케이스의 개수 T
+T = int(input())    
 
 for test_case in range(1, 1+T):
     H, W = map(int, input().split())
@@ -19,7 +19,6 @@ for test_case in range(1, 1+T):
 
     battle_field = [list(input()) for _ in range(H)]
     # 게임 맵 battle_field
-    # print(battle_field)
 
     N = int(input())
     # 사용자가 넣을 입력의 개수 N
@@ -41,6 +40,8 @@ for test_case in range(1, 1+T):
     di = [0, -1, 0, 1]
     dj = [1, 0, -1, 0]
     dd = ['>', '^', '<', 'v']
+
+    # 명령에 따라 di, dj, dd의 인덱스 정하기
     dict_w = {'R': 0, 'U': 1, 'L': 2, 'D': 3}
 
     i, j = tank_position
@@ -51,9 +52,9 @@ for test_case in range(1, 1+T):
 
     # input 들어오는 문자 확인해서 그에 따른 명령 실행
     for c in input_command:
-        # Shoot 나오면 전에 설정한 방향대로 쏘기
+
+        # 발사 명령
         if c == 'S':
-            # print(c)
             k = 1
             while True:
                 # 초기 설정
@@ -72,33 +73,29 @@ for test_case in range(1, 1+T):
                     elif battle_field[pi][pj] == '#':
                         break
 
-                else:       # 정상인덱스가 아니라면
+                else:       # 정상인덱스가 아니라면 = 맵 밖으로 넘어갔다면
                     break
 
                 k += 1
 
-        # 방향 명령이라면
+        # 방향 명령
         else:
-            # print(c)
             # 방향 저장
             direction_idx = dict_w[c]
-            # print(direction_idx)
 
             ni = i + di[dict_w[c]]
             nj = j + dj[dict_w[c]]
 
-            if 0 <= ni <= H-1 and 0 <= nj <= W-1 and battle_field[ni][nj] == '.':   # 정상인덱스이고, 평지라면, 이동
+            # 정상인덱스이고, 평지라면, 이동한다
+            if 0 <= ni <= H-1 and 0 <= nj <= W-1 and battle_field[ni][nj] == '.':   
                 # 원래 자리 평지로 하고 이동.. 같은자리 다시 올 수 있도록
                 battle_field[i][j] = '.'
                 i = ni
                 j = nj
-                # print(i, j)
-        # pprint.pprint(battle_field)
-        # print()
+                
 
     # 모든 입력 마치면 탱크의 초기위치와 현재 위치 수정
-    # print(i, j)
-    battle_field[si][sj] = '.'
+    battle_field[si][sj] = '.'  # 초기위치 평지로 바꾸기
     battle_field[i][j] = dd[direction_idx]
 
     # 배틀필드 출력
