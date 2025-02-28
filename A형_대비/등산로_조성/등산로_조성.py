@@ -22,7 +22,10 @@ sys.stdin = open('input.txt', 'r')
             깎아서 갈 수 있는가?
                 모두 통과하면 플래그 내리고 깎아서 visited 하기.
                 그러면 다시 막히는 칸 만날텐데. 거기서 return
-                
+    
+    더 이상 갈 수 없을 때의 값만 계속 최댓값과 비교해서 업데이트
+    visited에 마지막 도착 했을때 할당 안해도 됨
+    
 '''
 
 def find_highest_idx(arr):
@@ -39,7 +42,7 @@ def find_highest_idx(arr):
 
 
 def dfs(i, j):
-    global flag
+    global flag, max_v
     di = [0, -1, 0, 1]
     dj = [1, 0, -1, 0]
 
@@ -60,8 +63,9 @@ def dfs(i, j):
                     # 깎을 수 있다면 일단 깎기.
                     flag = 0
                     dfs(ni, nj)
-                else:
-                    continue
+
+                else:   # 더 이상 갈 수 없다면, 최댓값과 비교해서 업데이트
+                    if arr[i][j]
 
 
 T = int(input())
@@ -83,6 +87,7 @@ for test_case in range(1, 1+T):
     # print(high_lst)
 
     flag = 1
+    max_v = 0
     for i, j in high_lst:
         # print(i, j)
         visited[i][j] = 1
