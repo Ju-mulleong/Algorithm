@@ -1,6 +1,6 @@
 import sys
 import pprint
-sys.stdin = open('input.txt', 'r')
+sys.stdin = open('input1.txt', 'r')
 
 
 '''
@@ -30,7 +30,7 @@ sys.stdin = open('input.txt', 'r')
 
 def find_highest_idx(arr):
     # 이차원 배열에서 최댓값 구하기
-    high = max(max(*arr))
+    high = max(map(max, arr))
     # print(high)
     high_lst =[]
 
@@ -42,46 +42,57 @@ def find_highest_idx(arr):
 
 
 def dfs(i, j):
-    global flag, max_v
+    global flag, max_v, visited, K
     di = [0, -1, 0, 1]
     dj = [1, 0, -1, 0]
-
+    # print(i, j)
     # 현재 위치에서 상하좌우 중, 정상인덱스이면서 현재값보다 낮은 위치 확인
     # 정상인덱스면서 나보다 큰 값이라면, 깎아서 갈 수 있는지 확인
     for d in range(4):
         ni = i + di[d]
         nj = j + dj[d]
 
-        if 0 <= ni <= N-1 and 0 <= nj <= N-1:
+        if 0 <= ni <= N-1 and 0 <= nj <= N-1 and (visited[ni][nj] == 0):   # 정상인덱스이고, 방문하지 않았다면
+            if arr[i][j] > arr[ni][nj]:     # 현재위치가 목표위치보다 높고, 방문하지 않았다면 이동
+                visited[ni][nj] = visited[i][j] +1      # visited에 지나온 경로만큼의 길이값 표시
+                # pprint.pprint(visited)
+                dfs(ni, nj)                             # 재귀(이동)
+                visited[ni][nj] = 0                     # visited 원복
 
-            if arr[i][j] > arr[ni][nj]:
-                # 원복하기 위해 저장
-                reversal = visited[ni][nj]
+            else:       # 목표위치가 현재 높이보다 높거나 같을 때
+                if arr[ni][nj]-K < arr[ni][nj]:     # 목표위치의 높이를 K만큼 깎았을때 현재위치 높이보다 낮다면
+                    if flag == 1:               # 만약 아직 안 깎았다면
 
-                # 최댓값으로 업데이트
-                visited[ni][nj] = max(visited[i][j] + 1, visited[ni][nj])
-                dfs(ni, nj)
-                # 원복
-                visited[ni][nj] = reversal
+                        for dig in range(1, K+1):   # 깎을 수 있는 경우의 수     # 1,2,3...K
+                            arr[ni][nj] -= dig
 
-            else:
-                if arr[ni][nj]-K < arr[ni][nj] and flag == 1:
-                    # 깎을 수 있다면 일단 깎기.
+                            if arr[ni][nj] < arr[i][j]:     # 깎은 높이가 현재 높이보다 낮다면
+                                flag = 0
+#                                 print(f'dig={dig}')
 
-                    # 깎을 수 있는 경우의 수
-                    for dig in range(1, K+1):
-                        arr[ni][nj] -= dig
-                        flag = 0
-                        # 원복하기 위해 저장
-                        reversal = visited[ni][nj]
+                                visited[ni][nj] = visited[i][j] + 1     # visited에 지나온 경로만큼의 길이값 표시
+#                                 pprint.pprint(visited)
+                                dfs(ni, nj)                             # 재귀(이동)
+                                visited[ni][nj] = 0                     # visited 원복
+                                flag = 1                                # flag 원복
+#                                 print(i, j)
 
-                        # 최댓값으로 업데이트
-                        visited[ni][nj] = max(visited[i][j] + 1, visited[ni][nj])
-                        dfs(ni, nj)
-                        # 원복
-                        visited[ni][nj] = reversal
-                else:
+                            arr[ni][nj] += dig                          # arr[ni][nj] 높이 원복
+
+
+                    else:   # 이미 깎았다면, 목표위치로 이동 못하므로 다른 방향 탐색
+                        continue
+
+                elif arr[ni][nj]-K > arr[ni][nj]:       # 목표위치를 K만큼 깎아도 현재위치 높이보다 높다면 다른 방향 탐색
                     continue
+
+        else:   # 정상인덱스가 아니라면
+            continue
+
+    # 4방향 다 탐색했는데 이동 못했다면, 그 좌표가 그 등산로의 도착지점
+    # 최댓값 업데이트
+    max_v = max(max_v, visited[i][j])
+#     print(f'max_v ={max_v}')
     return
 
 
@@ -105,9 +116,13 @@ for test_case in range(1, 1+T):
 
     flag = 1
     max_v = 0
+
     for i, j in high_lst:
         # print(i, j)
         visited[i][j] = 1
         dfs(i, j)
+        visited[i][j] = 0
 
-    print(f'#{test_case} {max(max(*visited))}')
+
+    # pprint.pprint(visited)
+    print(f'#{test_case} {max_v}')
