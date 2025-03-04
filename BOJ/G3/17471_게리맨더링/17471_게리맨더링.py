@@ -22,7 +22,6 @@ def is_connecting(subset):
     # 전부 이어졌다면 1 return, 그렇지 않으면 0 return
 
 
-
 def gerry(n, k, subset_1, subset_2):
     global min_v, cnt
     # 가지치기
@@ -35,7 +34,6 @@ def gerry(n, k, subset_1, subset_2):
 
             # 각 부분집합끼리 서로 연결되어있는지 확인
             if
-
 
 
             cnt += 1

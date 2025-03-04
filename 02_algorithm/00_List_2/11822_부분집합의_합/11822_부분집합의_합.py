@@ -60,7 +60,7 @@ for test_case in range(1, 1+T):
             그 index를 원소들의 list에 대입하면 
             그 부분집합이 어떤 원소를 지니는지 알 수 있다!
             '''
-            if i &  (1 << j):   # i의 j번 비트가 1인 경우
+            if i & (1 << j):   # i의 j번 비트가 1인 경우
                 '''
                 자 여기서 ( 1 << j )는 그냥 2^j와 같다고 했었다.
                 그러면 j는 for j in range(E)로 도니까
