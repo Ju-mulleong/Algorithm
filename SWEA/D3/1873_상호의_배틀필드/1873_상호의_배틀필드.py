@@ -50,7 +50,7 @@ for test_case in range(1, 1+T):
     # 초기조건 탱크의 방향 저장
     direction_idx = dd.index(battle_field[i][j])    # [1]
 
-    # input 들어오는 문자 확인해서 그에 따른 명령 실행
+    # input1.txt 들어오는 문자 확인해서 그에 따른 명령 실행
     for c in input_command:
 
         # 발사 명령

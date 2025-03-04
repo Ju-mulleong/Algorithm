@@ -32,7 +32,7 @@
 '''
 
 import sys
-sys.stdin = open("inputs/D1_중간값_찾기_input.txt", "r")  # 표준 입력(키보드) 대신 input.txt 읽겠다.
+sys.stdin = open("inputs/D1_중간값_찾기_input.txt", "r")  # 표준 입력(키보드) 대신 input1.txt.txt 읽겠다.
 
 
 

@@ -1,5 +1,5 @@
 import sys
-sys.stdin = open('input1.txt', 'r')     # input1, input2, input3
+sys.stdin = open('input1.txt', 'r')     # input1.txt, input2, input3
 
 '''
 자신의 키를 알 수 있다

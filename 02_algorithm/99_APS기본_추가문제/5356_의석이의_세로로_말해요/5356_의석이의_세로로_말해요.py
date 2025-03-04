@@ -1,5 +1,5 @@
 import sys
-sys.stdin = open('input.txt', 'r')  # input.txt
+sys.stdin = open('input.txt', 'r')  # input1.txt.txt
 
 T = int(input())
 
@@ -14,7 +14,7 @@ T = int(input())
     zip()에서 iterable들의 크기가 다르면 제일 작은 크기에 맞춰지는걸로 알고있다.
     이렇게 하면 까다로울듯
 
-2. 읽는건 평소처럼 행 우선순회로 input 받고, 제일 길이가 긴 줄의 길이에 맞춰서 읽는다.
+2. 읽는건 평소처럼 행 우선순회로 input1.txt 받고, 제일 길이가 긴 줄의 길이에 맞춰서 읽는다.
     만약 최대 길이 기준으로 빈 칸이 있으면, 그 칸은 ''로 넣는다.
     for로 열 우선순회로 읽어서 빈 문자열에 += 한다. 여기서 읽던 중 ''이 나오면 문자열에 추가하지않고 다음 반복으로 넘어간다.
 '''

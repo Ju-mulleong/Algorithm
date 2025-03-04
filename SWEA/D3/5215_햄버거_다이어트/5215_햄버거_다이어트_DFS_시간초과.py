@@ -1,5 +1,5 @@
 # import sys
-# sys.stdin = open('input.txt', 'r')
+# sys.stdin = open('input1.txt.txt', 'r')
 
 
 # 백트래킹 함수 작성
@@ -44,7 +44,7 @@ for test_case in range(1, 1+T):
     # 딕셔너리로 하자.
     # dict_menu = {}
     # for i in range(N):
-    #     K, V = map(int, input().split())
+    #     K, V = map(int, input1.txt().split())
     #     dict_menu[K] = V
     # print(dict_menu)
 

@@ -12,7 +12,7 @@ for test_case in range(1, 1+T):
     for i in input():   # num_list에 카드의 숫자들 저장
         num_list.append(int(i))
 
-    # 또는 그냥 num_list = list(map(int, input()) 로 해도 됨.
+    # 또는 그냥 num_list = list(map(int, input1.txt()) 로 해도 됨.
 
     # print(N, num_list)
 

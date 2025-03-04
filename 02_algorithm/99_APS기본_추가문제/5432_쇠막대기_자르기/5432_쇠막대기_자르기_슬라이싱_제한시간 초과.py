@@ -9,7 +9,7 @@ sys.stdin = open('input.txt', 'r')
 stack 사용
     stack안에 stack?
 
-1. 그냥 전체 input 2번 순회
+1. 그냥 전체 input1.txt 2번 순회
     첫 순회때 '(' 다음에 바로 ')' 나오면 둘 다 없애고 그 자리에 'R' 넣기.
     두 번째 순회 때 stack으로 하나씩 push하다가 ')' 나오면
         다시 하나씩 peek한다. '(' 나올때까지.
