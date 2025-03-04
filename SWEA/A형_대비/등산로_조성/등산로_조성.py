@@ -25,8 +25,8 @@ sys.stdin = open('input.txt', 'r')
     
     더 이상 갈 수 없을 때의 값만 계속 최댓값과 비교해서 업데이트
     visited에 마지막 도착 했을때 할당 안해도 됨
-    
 '''
+
 
 def find_highest_idx(arr):
     # 이차원 배열에서 최댓값 구하기
@@ -74,6 +74,7 @@ def dfs(i, j):
                         flag = 0
                         # 원복하기 위해 저장
                         reversal = visited[ni][nj]
+                        flag = 1
 
                         # 최댓값으로 업데이트
                         visited[ni][nj] = max(visited[i][j] + 1, visited[ni][nj])
@@ -97,7 +98,7 @@ for test_case in range(1, 1+T):
 
     # 등산로 길이 기억할 visited
     visited = [list([0]*N) for _ in range(N)]
-    # pprint.pprint(visited)
+    pprint.pprint(visited)
 
     # 가장 높은 봉우리의 인덱스로 이루어진 이차원 리스트
     high_lst = find_highest_idx(arr)
