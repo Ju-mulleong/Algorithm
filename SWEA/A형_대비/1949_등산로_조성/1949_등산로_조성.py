@@ -70,7 +70,6 @@ def dfs(i, j):
                                 flag = 0
 #                                 print(f'dig={dig}')
 
-
                                 visited[ni][nj] = visited[i][j] + 1     # visited에 지나온 경로만큼의 길이값 표시
 #                                 pprint.pprint(visited)
                                 dfs(ni, nj)                             # 재귀(이동)
@@ -78,9 +77,7 @@ def dfs(i, j):
                                 flag = 1                                # flag 원복
 #                                 print(i, j)
 
-
                             arr[ni][nj] += dig                          # arr[ni][nj] 높이 원복
-
 
                     else:   # 이미 깎았다면, 목표위치로 이동 못하므로 다른 방향 탐색
                         continue

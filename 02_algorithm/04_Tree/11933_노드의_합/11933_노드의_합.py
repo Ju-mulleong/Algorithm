@@ -1,6 +1,7 @@
 import sys
 sys.stdin = open('input.txt', 'r')
 
+
 '''
 자식+자식을 부모에 저장하고, 
 부모 노드 번호 확인 부모 노드 번호 == L 이면 그 값 출력
@@ -8,14 +9,16 @@ sys.stdin = open('input.txt', 'r')
     실행부분에서 자식들 값 더해서 해당 노드에 할당
 '''
 
-
 def post_order(n):
     if n <= N:
         post_order(n*2)         # 왼쪽 자식 탐색
         post_order(n*2+1)       # 오른쪽 자식 탐색
-        print(n)
-        if tree[n] != 0:
-            tree[n] = tree[n*2] + tree[n*2+1]
+        # print(n)
+        if tree[n] == 0:        # 왼쪽 자식만 있을 경우 생각해야도미
+            if n*2 <= N:
+                tree[n] += tree[n*2]
+                if n*2+1 <= N:
+                    tree[n] += tree[n*2+1]
 
 T = int(input())
 
