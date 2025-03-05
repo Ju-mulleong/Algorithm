@@ -22,21 +22,21 @@ break로 다음 출발점 찾기
 '''
 
 
-def solve(i, j):
+def find_k(i, j):
     di = [1, 1, -1, -1]
     dj = [1, -1, -1, 1]
     dessert_lst = [arr[i][j]]
     lst_k = []
 
-    # 일단 현재 출발지점에서 가능한 제일 큰 사각형 만들기.
-    # 그 사각형에서 변이 2 이상이면, 그 변 1씩 줄이면서 해보기
+    # 일단 가능한 현재 좌표에서 시작했을 때 제일 큰 사각형 만들어보기
+
+    k = 1
     for d in range(4):
-        k = 1
 
-        ni = i + di[d] * k
-        nj = j + dj[d] * k
+        while 0 <= i + di[d] * k <= N-1 and 0 <= j + dj[d] * k <= N-1:  # 정상인덱스 인 경우에만
 
-        while 0 <= ni <= N-1 and 0 <= nj <= N-1:  # 정상인덱스 인 경우에만
+            ni = i + di[d] * k
+            nj = j + dj[d] * k
 
             if arr[ni][nj] in dessert_lst:  # 겹치는 디저트가 있으면 방향 틀기
                 break
@@ -44,10 +44,7 @@ def solve(i, j):
             # dessert_lst.append(arr[ni][nj])
 
             k += 1
-
-        lst_k.append(k)
-
-
+        #  한 방향으로 이동 끝나면, 이동한 거리(k)값 기억하고, 좌표 그 위치로 이동
 
 
     # lst_k = [1, 2]
