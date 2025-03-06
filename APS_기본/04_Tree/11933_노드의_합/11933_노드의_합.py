@@ -33,3 +33,16 @@ for test_case in range(1, 1+T):
 
     post_order(1)
     print(f'#{test_case} {tree[L]}')
+
+'''
+강사님 방법도 코드 보기
+
+l = post(n*2)
+r = post(n*2+1)
+
+tree[v] = l+r
+
+이런 느낌 자세한건 swea
+
+
+'''
