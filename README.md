@@ -3,16 +3,15 @@
 ## 파일 규칙 예시
 ```
 D2/
- ├── solutions/
- │    ├── 1234.py
- │    ├── 1234.cpp
- ├── inputs/
- │    ├── 1234_input1.txt
- │    ├── 1234_input2.txt
- │    ├── 1234_edge1.txt
- │    ├── 1234_random1.txt
- │    ├── 5678_input1.txt
- │    ├── 5678_large1.txt
- ├── outputs/
- ├── docs/
+ ├── ProblemNumber1_ProblemName1
+ │    ├── ProblemNumber_ProblemName.py
+ │    ├── input.txt
+ │    ├── input2.txt
+ │    ├── output.txt
+ │    ├── output2.txt
+ │    ├── Note
+ ├──  ├── ...
+ ├── ProblemNumber2_ProblemName2
+ ├── ProblemNumber3_ProblemName3
+ ├── ...
 ```
