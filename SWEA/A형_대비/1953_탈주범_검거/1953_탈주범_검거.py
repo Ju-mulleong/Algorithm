@@ -55,6 +55,7 @@ def dfs(c, l, i, j, visited):
                     if visited[ii][jj] == 1:
                         ans_arr[ii][jj] = 1
 
+
 T = int(input())
 
 for test_case in range(1, 1+T):

@@ -30,5 +30,4 @@ for test_case in range(1, 1+T):
             elif lst_all[i][0] > lst_all[j][0] and lst_all[i][1] < lst_all[j][1]:
                 cnt += 1
 
-
     print(f'#{test_case} {cnt//2}')

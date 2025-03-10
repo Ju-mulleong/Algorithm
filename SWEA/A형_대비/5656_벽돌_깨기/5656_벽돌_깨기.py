@@ -84,7 +84,6 @@ def shoot(n, arr):
         flag = 1
         return
 
-
     # 선택한 열에서 아래로 쭉 내려서 가장 먼저 찾는 벽돌부터 시작 (0이 아닐때)
     for j in range(W):
         score = 0
