@@ -1,4 +1,5 @@
-import sys, pprint
+import sys
+import pprint
 sys.stdin = open('input.txt', 'r')
 
 
@@ -17,9 +18,8 @@ def move():
     di = [0, -1, 1, 0, 0]      # 더미, 상, 하, 좌, 우 순서대로
     dj = [0, 0, 0, -1, 1]
 
-    for m in range(len(micro_lst)):
-        if micro_lst[m] == [0]:    # 병합된 미생물 자리 넘기기
-            continue
+    m = 0
+    while m < len(micro_lst):
 
         d = micro_lst[m][3]    # micro_lst[m]의 인덱스 3이 방향이다.
         i = micro_lst[m][0]
@@ -38,7 +38,7 @@ def move():
             micro_lst[m][2] //= 2
             # 미생물 없어지면 lst에서 제거
             if micro_lst[m][2] == 0:
-                micro_lst[m] = [0]
+                micro_lst.pop(m)
                 continue
             # d가 홀수면(1,3) 1 더하고, 짝수면(2,4) 1 빼기
             if d % 2 == 0:
@@ -48,36 +48,39 @@ def move():
 
             micro_lst[m][3] = d    # d(방향) 반대로 바꾸기
 
+        m += 1
     merge_micro()
 
 
 # 겹치는 미생물 병합
 def merge_micro():
-    global K
+    global micro_lst
+    kk = len(micro_lst)
 
+    i = 0
     # 미생물 전부 이동했을 때, 좌표가 겹치는 미생물들이 있으면, 개수 합치고 제일 많은 미생물의 방향으로 방향 설정
-    for i in range(K):
-        if micro_lst[i] == [0]:    # 병합된 미생물 자리 넘기기
-            continue
+    # pop사용하면 micro_lst의 길이 계속 바뀌니까 for말고 while 사용
+    while i < len(micro_lst):
 
         # 기준 미생물 미생물 수, 방향 저장
         amount_lst = [micro_lst[i][2]]     # 미생물 수 저장
         direction_lst = [micro_lst[i][3]]   # 미생물 방향 저장
-        for j in range(i+1, K):
-            if micro_lst[j] == [0]:  # 병합된 미생물 자리 넘기기
-                continue
+        j = i + 1
+        while j < len(micro_lst):
+            # 가지치기
+            if len(amount_lst) == 4:
+                break
 
             if (micro_lst[i][0], micro_lst[i][1]) == (micro_lst[j][0], micro_lst[j][1]):    # 만약 좌표 같은 미생물 있으면
                 amount_lst.append(micro_lst[j][2])         # 미생물 수 저장
                 direction_lst.append(micro_lst[j][3])       # 미생물 방향 저장
 
-                # 어차피 병합되니까, 비교할 미생물 리스트에서 없애기(pop보다 그냥 0으로 바꾸는게 시간복잡도 측면에서 나을듯?)
-                micro_lst[j] = [0]
+                # 어차피 병합되니까, 비교할 미생물 리스트에서 없애기 (pop 사용)
+                micro_lst.pop(j)
+                continue
+                # pprint.pprint(micro_lst)
 
-                # 가지치기
-                if len(amount_lst) == 4:
-                    break
-
+            j += 1
         # amount_lst 안의 미생물 수 비교
         # 초기 설정
         max_idx = 0
@@ -91,6 +94,8 @@ def merge_micro():
 
         # 병합된 미생물의 정보로 micro_lst 바꾸기
         micro_lst[i] = [micro_lst[i][0], micro_lst[i][1], sum_v, direction_lst[max_idx]]
+
+        i += 1
 
 
 T = int(input())
@@ -117,9 +122,15 @@ for test_case in range(1, 1+T):
 
     # M시간 후 미생물 총 합 계산
     sum_vv = 0
-    for t in range(K):
-        if micro_lst[t] != [0]:
-            sum_vv += micro_lst[t][2]
+    for t in range(len(micro_lst)):
+        sum_vv += micro_lst[t][2]
 
     print(f'#{test_case} {sum_vv}')
 
+'''
+원래 코드에서 병합된 미생물 자리에 0 할당 대신 pop 했을 때:
+    for i in (K = len(micro_lst) 문을 전부 while로 바꾸고,
+        pop쓰면 len(micro_lst)가 계속 바뀌므로
+    if ~~ == [0] 조건 전부 없앰
+        병합되서 0이 되는게 아니라 pop으로 사라지니까
+'''

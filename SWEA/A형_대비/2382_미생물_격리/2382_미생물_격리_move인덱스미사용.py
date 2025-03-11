@@ -1,4 +1,5 @@
-import sys, pprint
+import sys
+import pprint
 sys.stdin = open('input.txt', 'r')
 
 
@@ -17,36 +18,33 @@ def move():
     di = [0, -1, 1, 0, 0]      # 더미, 상, 하, 좌, 우 순서대로
     dj = [0, 0, 0, -1, 1]
 
-    for m in range(len(micro_lst)):
-        if micro_lst[m] == [0]:    # 병합된 미생물 자리 넘기기
+    for micro in micro_lst:
+        if micro == [0]:    # 병합된 미생물 자리 넘기기
             continue
 
-        d = micro_lst[m][3]    # micro_lst[m]의 인덱스 3이 방향이다.
-        i = micro_lst[m][0]
-        j = micro_lst[m][1]
+        # print(micro)
+        d = micro[3]    # micro의 인덱스 3이 방향이다.
+        i = micro[0]
+        j = micro[1]
 
         ni = i + di[d]
         nj = j + dj[d]
 
         # 일반 델타응용과는 다르게 무조건 정상인덱스이다. 초기조건에 약 바른 셀에는 미생물 없고, 경계에 다다르면 방향 바꾸므로.
         # micro의 위치 이동
-        micro_lst[m][0] = ni
-        micro_lst[m][1] = nj
+        micro[0] = ni
+        micro[1] = nj
 
         if ni in (0, N-1) or nj in (0, N-1):    # 만약 도착지점이 약 바른 끝 셀이라면,
             # 미생물 수 절반되고,
-            micro_lst[m][2] //= 2
-            # 미생물 없어지면 lst에서 제거
-            if micro_lst[m][2] == 0:
-                micro_lst[m] = [0]
-                continue
+            micro[2] //= 2
             # d가 홀수면(1,3) 1 더하고, 짝수면(2,4) 1 빼기
             if d % 2 == 0:
                 d -= 1
             else:
                 d += 1
 
-            micro_lst[m][3] = d    # d(방향) 반대로 바꾸기
+            micro[3] = d    # d(방향) 반대로 바꾸기
 
     merge_micro()
 
