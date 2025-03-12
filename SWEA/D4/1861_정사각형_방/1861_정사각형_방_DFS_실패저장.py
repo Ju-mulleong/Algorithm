@@ -35,11 +35,13 @@ def dfs(i, j, s_i, s_j):
         max_v = cnt
         ans = arr[s_i][s_j]
         max_i, max_j = s_i, s_j
+        print(f'최댓값:{max_v}')
 
     elif cnt == max_v:
         if arr[s_i][s_j] < arr[max_i][max_j]:
             ans = arr[s_i][s_j]
             max_i, max_j = s_i, s_j
+
 
 T = int(input())
 
@@ -54,6 +56,7 @@ for test_case in range(1, 1+T):
             # 가지치기
             # 현재 칸에서 최대한 (주어진 배열내 원소의 최댓값)까지 1씩 계속 간다고 해도, 이미 나온 max_v값 못넘으면 dfs 실행하지 않기
             if N ** 2 - arr[i][j] < max_v - 1:
+                print('here')
                 continue
             cnt = 1
             dfs(i, j, i, j)

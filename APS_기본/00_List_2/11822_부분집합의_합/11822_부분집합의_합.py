@@ -14,7 +14,7 @@ E = 12  # 원소의 개수 E
 # cnt를 return
 
 for test_case in range(1, 1+T):
-    N, K = map(int, input().split())
+    N, K = map(int, input().split())    # N은 부분집합의 크기, K는 부분집합의 합
     # print(N, K)
 
     # 부분 집합 중 N개의 원소를 가진 집합들 다 정렬.
@@ -33,7 +33,7 @@ for test_case in range(1, 1+T):
             부분집합이 어떤 원소를 가지고 있는지는 모르지만, 
             일단 총 2^E개는 분명하니까 각 부분집합마다 반복.
         '''
-        for j in range(E):      # 모집합 원소의 개수 E의 길이만큼 비트 비교 반복
+        for j in range(E):      # 12개의 원소에 대해 확인
             '''
             여기서는 {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}가 모집합이다.
             이걸 집합말고 list처럼 index가 있다고 생각해보자.
@@ -104,7 +104,6 @@ for test_case in range(1, 1+T):
             ans += 1
 
     print(f'#{test_case} {ans}')
-
 
 
 
