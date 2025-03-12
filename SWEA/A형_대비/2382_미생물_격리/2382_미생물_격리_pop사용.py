@@ -1,6 +1,6 @@
 import sys
 import pprint
-sys.stdin = open('input.txt', 'r')
+sys.stdin = open('input2.txt', 'r')
 
 
 '''
@@ -41,6 +41,7 @@ def move():
                 micro_lst.pop(m)
                 continue
             # d가 홀수면(1,3) 1 더하고, 짝수면(2,4) 1 빼기
+            # 상 <-> 하, 좌 <-> 우
             if d % 2 == 0:
                 d -= 1
             else:
@@ -49,20 +50,26 @@ def move():
             micro_lst[m][3] = d    # d(방향) 반대로 바꾸기
 
         m += 1
+
+    print('이동 후 미생물 리스트')
+    pprint.pprint(micro_lst)
+
     merge_micro()
+
+    print('병합 완료된 미생물 리스트')
+    pprint.pprint(micro_lst)
 
 
 # 겹치는 미생물 병합
 def merge_micro():
     global micro_lst
-    kk = len(micro_lst)
 
     i = 0
     # 미생물 전부 이동했을 때, 좌표가 겹치는 미생물들이 있으면, 개수 합치고 제일 많은 미생물의 방향으로 방향 설정
-    # pop사용하면 micro_lst의 길이 계속 바뀌니까 for말고 while 사용
+    # pop사용하면 micro_lst의 길이가 계속 바뀌니까 for말고 while 사용
     while i < len(micro_lst):
 
-        # 기준 미생물 미생물 수, 방향 저장
+        # 기준 미생물의 수, 방향 저장 (병합 된 미생물의 방향, 수 알기 위해)
         amount_lst = [micro_lst[i][2]]     # 미생물 수 저장
         direction_lst = [micro_lst[i][3]]   # 미생물 방향 저장
         j = i + 1
@@ -78,7 +85,6 @@ def merge_micro():
                 # 어차피 병합되니까, 비교할 미생물 리스트에서 없애기 (pop 사용)
                 micro_lst.pop(j)
                 continue
-                # pprint.pprint(micro_lst)
 
             j += 1
         # amount_lst 안의 미생물 수 비교
@@ -98,6 +104,7 @@ def merge_micro():
         i += 1
 
 
+
 T = int(input())
 
 for test_case in range(1, 1+T):
@@ -105,15 +112,13 @@ for test_case in range(1, 1+T):
     # N*N 개수의 정사각형 셀, M은 격리시간, K는 미생물 군집의 개수
 
     arr = [[0]*N for _ in range(N)]
-    # print(arr)
     # 미생물 위치, 수, 이동방향 받기(상:1, 하:2, 좌:3, 우:4)
 
     micro_lst = [[0]*4 for _ in range(K)]
-    # print(micro_lst)
     for k in range(K):
         micro_lst[k] = list(map(int, input().split()))
-
-    # pprint.pprint(micro_lst)
+    print('미생물 리스트')
+    pprint.pprint(micro_lst)
 
     # 격리 시작
     # M시간동안(1시간에 1번 움직임)
