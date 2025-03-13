@@ -64,3 +64,7 @@ for test_case in range(1, 1+T):
     dfs(0)
 
     print(f'#{test_case} {min_v}')
+
+'''
+합산값을 인자로 주면 가지치기 ㄱㄴ?
+'''
