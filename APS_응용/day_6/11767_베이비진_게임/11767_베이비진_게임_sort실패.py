@@ -4,36 +4,34 @@ sys.stdin  = open('input.txt', 'r')
 
 '''
 현재 주어진 카드들로 run이나 tiplet을 만들수 있으면 만든다.
-#### 받은 카드들 오름차순으로 정렬하면 자연스럽게 확인 가능
-        !!! 아님.
-만약 오름차순으로 정렬해서 받는다면 
-001122를 받을 떄, 기존코드에서 run을 판별불가.
+받은 카드들 오름차순으로 정렬하면 자연스럽게 확인 가능???
 
 '''
 
 
 def check(lst, winner):
+    # 받은 카드들 오름차순으로 정렬
+    lst.sort()
     # print(lst)
-    count_lst = [0] * 10  # 0 ~ 9
-
-    # triplet?
-    for i in range(len(lst)):
-        count_lst[lst[i]] += 1
-        if count_lst[lst[i]] == 3:
-            return winner
-    # print(count_lst)
-
-    # run?
-    for j in range(len(count_lst)-2):
-        if count_lst[j] >= 1 and count_lst[j+1] >= 1 and count_lst[j+2] >= 1:
+    for i in range(len(lst)-2):
+        # run인가?
+        if lst[i] + 1 == lst[i+1] and lst[i+1] + 1 == lst[i+2]:
+            # print(winner)
             return winner
 
+        # triplet인가?
+        if lst[i] == lst[i+1] and lst[i+1] == lst[i+2]:
+            # print(winner)
+            return winner
+
+    # 그냥 끝낸다면 무승부 0 반환
     return 0
+
 
 T = int(input())
 
 for test_case in range(1, 1+T):
-    card_lst = list(map(int, input().split()))
+    card_lst = list(map(int, input().strip().split()))
 
     lst_A = []
     lst_B = []
