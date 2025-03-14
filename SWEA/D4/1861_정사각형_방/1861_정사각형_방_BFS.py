@@ -34,11 +34,6 @@ def bfs():
                 cnt += 1
                 dq.append([ni, nj])
 
-
-
-
-
-
 def dfs(i, j, s_i, s_j):
     global cnt, max_v, max_i, max_j, ans
     di = [0, -1, 0, 1]

@@ -1,5 +1,6 @@
 import sys
-sys.stdin = open('input.txt', 'r')
+sys.stdin = open('input2.txt', 'r')
+sys.stdout = open('output.txt', 'w')
 
 
 '''
@@ -17,58 +18,73 @@ sys.stdin = open('input.txt', 'r')
 사각형이니까 d=0, d=3일 때의 k값과 d=1, d=4일때의 k값은 같아야한다.
 일단 k = 1로 시작하고, 정상인덱스 벗어날때까지 증가,정상인덱스 까지의 값을 for 로 돌린다.
 
-그리고 디저트 가게 방문할 때마다 list에 추가한다. 만약, 리스트에 이미 그 숫자가 있다면, 
-break로 다음 출발점 찾기
+memo 활용
+
+현재 인덱스에서 가장 큰 사각형만 보면된다.
+출발점이 같은데 작은사각형은 의미없다. 무조건 종류 더 적음
 '''
 
 
-def find_k(i, j):
+def solve(i, j):
     di = [1, 1, -1, -1]
     dj = [1, -1, -1, 1]
-    dessert_lst = [arr[i][j]]
-    lst_k = []
 
-    # 일단 가능한 현재 좌표에서 시작했을 때 제일 큰 사각형 만들어보기
+    # memo만들기
+    memo = [0] * 101  # 인덱스 0은 더미
+    memo[arr[i][j]] = 1
+    # print(memo)
+    origin_i = i
+    origin_j = j
+    print(f'origin_i = {origin_i}, origin_j = {origin_j}')
 
-    k = 1
-    for d in range(4):
+    cnt = 1
+    ccnt = 0
+    d = 0
+    while d <= 3:
+        print(f'i = {i + di[d]}')
+        print(f'j = {j + dj[d]}')
+        print(f'arr[i][j] = {arr[i][j]}')
+        while True:
+            # 그냥 무조건 이동했다고 생각하자
+            ni = i + di[d]
+            nj = j + dj[d]
+            if ccnt == 2:
+                if d in (0, 1):
+                    d += 2
+                else:
+                    d -= 2
 
-        while 0 <= i + di[d] * k <= N-1 and 0 <= j + dj[d] * k <= N-1:  # 정상인덱스 인 경우에만
+            if 0 <= ni < N and 0 <= nj < N:     # 정상인덱스인 경우
+                # 정상적으로 돌아오는건 무조건 이거밖에 없음.
+                if d == 3 and origin_i == ni and origin_j == nj and cnt >= 4:
+                    return cnt
 
-            ni = i + di[d] * k
-            nj = j + dj[d] * k
+                if memo[arr[ni][nj]] == 0:  # 정상인덱스 인 경우, memo안된 디저트가게일 경우에만 이동
+                    # 이동
+                    i = ni
+                    j = nj
+                    memo[arr[i][j]] = 1
+                    cnt += 1
+                    print(f'이동 = {i, j}')
+                    print(f'arr[i][j] = {arr[i][j]}')
+                    print(f'cnt = {cnt}')
 
-            if arr[ni][nj] in dessert_lst:  # 겹치는 디저트가 있으면 방향 틀기
+                # 정상인덱스이지만, 이미 갔던 가게인 경우
+                # 뒤로 돌아가고(안움직였다 치고), 방향 바꾸기
+                else:
+                    ccnt += 1
+                    break
+            # 비정상인덱스인 경우
+            # 뒤로 돌아가서 방향 바꾸기
+            else:
+                ccnt += 1
                 break
 
-            # dessert_lst.append(arr[ni][nj])
+        d += 1
 
-            k += 1
-        #  한 방향으로 이동 끝나면, 이동한 거리(k)값 기억하고, 좌표 그 위치로 이동
-
-
-    # lst_k = [1, 2]
-
-    # for first_k in range(1, lst_k[0]+1):
-    #     ni = i + di[0]*first_k
-    #     nj = j + dj[0]*first_k
-    #
-    #     dessert_lst.append(arr[ni][nj])
-    #
-    #     for second_k in range(1, lst_k[1]+1):
-    #         ni = i + di[1] * second_k
-    #         nj = j + dj[1] * second_k
-    #
-    #         dessert_lst.append(arr[ni][nj])
-    #
-    #
-    #
-
-
-
-
-
-
+    # 반복 다 끝났는데 만약 출발점으로 못 돌아왔다면, 디저트 못 먹은 것
+    else:
+        return -1
 
 
 T = int(input())
@@ -78,10 +94,14 @@ for test_case in range(1, 1+T):
     arr = [list(map(int, input().split())) for _ in range(N)]
     # print(arr)
     max_v = 0
-    for i in range(N-2):
-        for j in range(1, N-1):
-            max_v = max(max_v, solve(i, j, 0))
 
+    # 디저트 종류를 나타내는 수는 1이상 100이하
+
+    for i in range(N-2):    # i는 끝 2열에서는 불가능    # 0, 1
+        for j in range(1, N-1):     # j는 양 끝에서 불가능 # 1, 2
+            max_v = max(max_v, solve(i, j))
+
+    # 다 돌았는데 최댓값 업데이트 못했으면
     if max_v == 0:
         ans = -1
     else:

@@ -1,5 +1,5 @@
 import sys
-sys.stdin = open('input.txt', 'r')
+sys.stdin = open('input2.txt', 'r')
 sys.stdout = open('output.txt', 'w')
 '''
 1일, 1달, 3달, 1년 
@@ -12,37 +12,33 @@ sys.stdout = open('output.txt', 'w')
 
 def apply_three_month(d, m, t, lst, n, cnt):
     global min_v
-    # print(f'cnt = {cnt}')
-    # print(f'lst = {lst}')
+    print(f'cnt = {cnt}')
+    print(f'lst = {lst}')
     if n == cnt:
         # 최솟값 업데이트
         min_v = min(min_v, day_month(d, m, t, lst, n))
-        # print(f'min_v = {min_v}')
+        print(f'min_v = {min_v}')
         return
 
     for j in range(12):
         if lst[j]:
-            # print(f'j = {j}')
+            print(f'j = {j}')
+            temp_lst = [x for x in lst]
+            print(f'temp_lst = {temp_lst}')
+
             if j == 10:
-                j_10, j_11 = lst[j], lst[j + 1]
                 lst[j], lst[j + 1] = 0, 0
-                apply_three_month(d, m, t, lst, n, cnt + 1)
-                lst[j], lst[j + 1] = j_10, j_11
-                # print(f'returned_lst = {lst}')
 
             elif j == 11:
-                j_111 = lst[j]
                 lst[j] = 0
-                apply_three_month(d, m, t, lst, n, cnt + 1)
-                lst[j] = j_111
-                # print(f'returned_lst = {lst}')
 
             else:
-                j_j, j_jj, j_jjj = lst[j], lst[j+1], lst[j+2]
                 lst[j], lst[j+1], lst[j+2] = 0, 0, 0
-                apply_three_month(d, m, t, lst, n, cnt + 1)
-                lst[j], lst[j+1], lst[j+2] = j_j, j_jj, j_jjj
-                # print(f'returned_lst = {lst}')
+
+            apply_three_month(d, m, t, lst, n, cnt + 1)
+
+            lst = temp_lst
+            print(f'returned_lst = {lst}')
 
 
 # 주어진 lst에서 하루요금, 한 달치 요금 조합의 최저가격 구하기
@@ -94,5 +90,8 @@ for test_case in range(1, 1+T):
 
 
 '''
-원복시 list통째로 복사하는거 진짜 왠만하면 하지말자
+원복시 list통째로 복사하는거 하지말자.
+
+재귀할때마다 temp_lst가 이전 시행의 temp_lst를 덮어씌운다.
+
 '''
