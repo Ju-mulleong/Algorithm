@@ -1,6 +1,6 @@
 import sys
 sys.stdin = open('input2.txt', 'r')
-sys.stdout = open('output.txt', 'w')
+# sys.stdout = open('output.txt', 'w')
 
 
 '''
@@ -24,10 +24,9 @@ def solve(i, j, d):
     nj = j + dj[d]
 
     # 만약, 방향 한번 돌렸는데도 이동 불가하면, 한 칸 뒤로 가기
-    # 사실
     # 갈 수 있는 최대까지 이동
     while 0 <= ni < N and 0 <= nj < N:
-        if [ni, nj] == latest_v:     # 방문했던 인덱스를 다시 방문하는 방향이라면 방향 복구하고 한칸 뒤로 가면됨
+        if [ni, nj] == latest_v:     # 방문했던 인덱스를 다시 방문하는 방향이라면 방향 복구하고 한 칸 뒤로 가면됨
             solve(ni, nj, (d+2)%4)
 
         if memo[arr[ni][nj]] == 0:

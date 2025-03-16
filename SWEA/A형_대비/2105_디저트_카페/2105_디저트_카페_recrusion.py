@@ -9,45 +9,47 @@ from collections import deque
 거기서부터 사각형 만들어가며 안되면 하나씩 빼기
 '''
 
-# 최종
-def move(i, j, d):
-    global memo, cnt, max_v, flag
+# d = 0, d = 1일때 최대 길이 찾기
+def find_len(i, j, d):
+    global memo, cnt_sum, max_v, s_i, s_j, cnt_0, cnt_1
     di = [1, 1, -1, -1]
     dj = [1, -1, -1, 1]
 
-    print(f'현재 칸 = {i, j} 값 = {arr[i][j]}')
-
     ni = i + di[d]
     nj = j + dj[d]
+    #
+    # # 출발점으로 복귀했다면 지금까지의 cnt 최댓값 업데이트
+    # if d == 3 and (ni, nj) == (s_i, s_j):
+    #     cnt_sum += 1
+    #     max_v = max(max_v, cnt_sum)
+    #     return
+
+    if d == 3:
+        return cnt_0, cnt_1
+
+    # 이 방향으로 가능한 한 계속 이동
+    while 0 <= ni < N and 0 <= nj < N and memo[arr[ni][nj]] == 0:
+        if d == 0:
+            cnt_0 += 1
+        elif d == 1:
+            cnt_1 += 1
+        # 이동
+        memo[arr[ni][nj]] = 1
+        ni += di[d]
+        nj += dj[d]
+
+    find_len(ni-di[d], nj-dj[d], d+1)
 
 
-    if
+def make_max_v(i, j, cnt_0, cnt_1):
+    di = [1, 1, -1, -1]
+    dj = [1, -1, -1, 1]
 
+    for ii in range(cnt_0):
+        for jj in range(cnt_1):
+            i + di[0]*ii
+            j + dj[1]*jj
 
-    if 0 <= ni < N and 0 <= nj < N:
-        if memo[arr[ni][nj]] == 0:
-            memo[arr[ni][nj]] = 1
-
-
-    else:
-        return
-
-    return
-
-
-
-
-
-
-
-def do_it(i, j):
-    s_i, s_j = i, j
-    for d in range(4):
-        move(d)
-
-    # 다 돌아서 출발점으로 복귀했는가
-    if s_i == i and s_j == j:
-        return True
 
 
 T = int(input())
@@ -67,9 +69,11 @@ for test_case in range(1, 1+T):
             cnt = 1
             s_i = i
             s_j = j
-            flag = 0
-            if do_it(i, j):
-                max_v = max(max_v, cnt)
+            cnt_0 = 0
+            cnt_1 = 0
+            cnt_0, cnt_1 = find_len(i, j, 0)
+
+            make_max_v(i, j, cnt_0, cnt_1)
 
     # 다 돌았는데 최댓값 업데이트 못했으면
     if max_v == 0:
