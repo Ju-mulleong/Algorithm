@@ -24,7 +24,6 @@ def dfs(row, sum_v):
         visited[i] = 0  # 원복
 
 
-
 T = int(input())
 
 for test_case in range(1, 1+T):

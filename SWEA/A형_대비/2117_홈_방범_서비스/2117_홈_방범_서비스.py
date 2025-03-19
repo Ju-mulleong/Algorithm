@@ -24,24 +24,52 @@ K는 무한정으로 커질수있다.
 모르겠다 일단 다 넣어보자
 '''
 
-def solve(i, j):
+
+def solve(i, j, K):
+    if K == 0:
+        return
+
+    global max_v
     # 현재 인덱스에서 시작
     # 구한 최대 K에서 시작, 손익분기점 넣는지 확인한다.
-    # 안되면 다음 i, j로 넘어간다.
-    # 모든 i, j 돌았는데도 안되면, K하나 내리고 다시 반복
+    # 안되면 K하나씩 줄이면서 확인해본다.
+    # 되는 K에서 최댓값 비교
 
     # 현재 K와 인덱스로 운영 영역 확인하기
-    # 가운데줄 더하고
-    # 가운데 기준 위와 아래 계산, j의 부호만 뒤집어주면 되니까 동시에 가능할듯
 
+    # 가운데줄에서 확인
+    kk = -1
+    cnt = 0
+    dd = 1
+    for jj in range(j - (K-1), j + (K-1)+1):            # j-(K-1) ~ j+(K+1)
+        kk += dd
 
+        if kk == K - 1:
+            dd = -1
 
+        # 정상인덱스라면, ii 확인
+        if jj < 0 or jj >= N:   # 비정상인덱스면 넘기기
+            continue
+        # print(f'kk = {kk}')
 
+        for ii in range(i-kk, i+kk+1):
+            # 이 인덱스가 정상인덱스라면, 집 있는지 확인
+            if ii < 0 or ii >= N:  # 비정상인덱스일때 넘기기
+                continue
 
-    pass
+            # print(f'i = {i}, j = {j}')
+            # print(f'ii = {ii}, jj = {jj}, K = {K}')
+            if arr[ii][jj] == 1:
+                cnt += 1
 
+    # 현재 영역안의 집들로 현재 선택한 영역의 손익분기점 넘을 수 있을 때 최댓값 업데이트 시도
+    if cnt * M >= K * K + (K - 1) * (K - 1):
+        max_v = max(max_v, cnt)
+        return
 
-
+    # 못넘으면, K 줄여서 다시 반복
+    else:
+        solve(i, j, K-1)
 
 
 T = int(input())
@@ -51,6 +79,7 @@ for test_case in range(1, 1+T):
     # N*N 크기의 도시, M은 하나의 집이 지불하는 비용
     arr = [list(map(int, input().split())) for _ in range(N)]
 
+    # 현재 테케의 맵에서 집의 총 개수 확인
     sum_house = 0
     for i in range(N):
         sum_house += arr[i].count(1)
@@ -58,22 +87,22 @@ for test_case in range(1, 1+T):
 
     # 이번 테케에서 주어진 집 개수를 바탕으로 이론상 가능한 최대 영역을 알 수 있다.
     K = 1
-    # cost_K = K * K + (K - 1) * (K - 1)
-
     while M * sum_house > K * K + (K - 1) * (K - 1):   # 모든 맵에 있는 집을 다 포함해도 손익분기점 못넘길때까지 K더하기
         K += 1
 
-    print(K)
+    K = K - 1
+    # print(K)
 
-
-
-
-
+    max_v = 0
     for i in range(N):
         for j in range(N):
-            solve(i, j)
+            solve(i, j, K)
 
+    print(f'#{test_case} {max_v}')
 
-
+'''
+크기 비교할때 경계값 주의..
+손익분기점이랑 같을때도 당연히 가능하다.(손익분기점 넘거나 같을때)
+'''
 
 
