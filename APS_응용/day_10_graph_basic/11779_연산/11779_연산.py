@@ -49,3 +49,7 @@ for test_case in range(1, 1+T):
     ans = bfs(dq)
 
     print(f'#{test_case} {ans}')
+
+'''
+visited에 가중치 넣어서 해도됨
+'''
