@@ -14,12 +14,19 @@ def dijkstra(start_i, start_j):
     pq = [(0, start_i, start_j)]
 
     # dist_lst 초기화
-    dist_lst = [[1e18]*N for _ in range(N)]
+    dist_lst = [[21e8]*N for _ in range(N)]
     dist_lst[start_i][start_j] = 0
 
     while pq:
+        # print(pq)
         # deQueue
         cur_w, cur_i, cur_j = heapq.heappop(pq)
+
+        # 한 번 왔던 노드에 도착했는데,
+        # 이미 예전에 더 적은 가중치로 여기에 도착했던 경우 (예전에 넣어놨던 enQueue로 인해 발생)
+
+        if dist_lst[cur_i][cur_j] < cur_w:
+            continue
 
         # 상하좌우 진행중, 정상인덱스일때만 실행
         di = [0, -1, 0, 1]
@@ -40,7 +47,7 @@ def dijkstra(start_i, start_j):
                 continue
 
             # dist_lst 업데이트, enQueue
-            dist_lst[ni][ni] = next_w
+            dist_lst[ni][nj] = next_w
             heapq.heappush(pq, (next_w, ni, nj))
 
     return dist_lst[N-1][N-1]
