@@ -14,10 +14,22 @@ MST(prim)
 반복?
 '''
 
+'''
+prim 최적화
+거리들 저장할 lst 만든다.
+    lst는 인덱스에 더 작은 값으로 들어온다면, 업데이트
+그리고 enQueue하기 전에, lst를 확인하고, 현재 가중치보다 lst 가중치가 작으면
+enQueue자체를 안한다.
+'''
+
 
 def prim(start_idx):
     # visited
     visited = [0]*N
+
+    # 최소 비용 저장 리스트
+    dists = [float('inf')]* N
+    dists[0] = 0
 
     # pq 만들기
     pq = [(0, start_idx)]
@@ -41,7 +53,12 @@ def prim(start_idx):
                 continue
             # 문제에서 환경부담금은 L**2 쓰니까 굳이 루트안해도 됨
             distance = (x_lst[cur_idx] - x_lst[t])**2 + (y_lst[cur_idx] - y_lst[t])**2
-            heapq.heappush(pq, (distance, t))
+
+            # 우선순위 큐에 삽입된 거리를 저장하면서 진행
+            # 더 작은 비용으로 갈 수 있을때만 heapq에 삽입
+            if dists[t] > distance:
+                dists[t] = distance
+                heapq.heappush(pq, (distance, t))
 
     return sum_v
 

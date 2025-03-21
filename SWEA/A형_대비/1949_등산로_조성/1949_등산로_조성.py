@@ -107,7 +107,7 @@ for test_case in range(1, 1+T):
 
     # 등산로 길이 기억할 visited
     visited = [list([0]*N) for _ in range(N)]
-    pprint.pprint(visited)
+    # pprint.pprint(visited)
 
     # 가장 높은 봉우리의 인덱스로 이루어진 이차원 리스트
     high_lst = find_highest_idx(arr)
