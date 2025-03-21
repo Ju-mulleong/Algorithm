@@ -7,7 +7,7 @@ sys.stdin = open('graph.txt', 'r')
 # --> 그냥 큐가 아닌, 우선순위 큐를 활용하면 좋다.
 # deQueue하고, 그 노드와 연결된 모든 노드를 Q에 집어넣고, visited로 빼는 형태기에
 # 넣을때 visited = 1하면 안된다!!!
-
+#
 
 def prim(start_node):
     pq = [(0, start_node)]  # 시작점은 가중치가 0이다. 시작노드의 가중치, 시작노드
