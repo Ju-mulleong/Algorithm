@@ -14,6 +14,7 @@ def check(arr):
     global K
     for j in range(width):
         cnt_same = 1
+        flag_k = 0
         for i in range(height - 1):
             target = arr[i][j]
             if arr[i+1][j] == target:
@@ -23,14 +24,24 @@ def check(arr):
                 cnt_same = 1
 
             if cnt_same == K:
-                return True
+                flag_k = 1
+                break
 
-    return False
+        if flag_k == 0:
+            return False
+
+    return True
 
 
 def dfs(cnt, n, arr):
     # print(cnt)
     global min_v
+
+    # 성능검사 실행
+    # 성능검사 통과했으면, 약품 투입 횟수 최솟값 업데이트
+    if check(arr) is True:
+        min_v = min(min_v, cnt)
+        return
 
     # 최악의 경우, 모든 행에 약을 칠지 말지 선택했다면, return
     if n == height:
@@ -41,11 +52,6 @@ def dfs(cnt, n, arr):
     if cnt >= min_v:
         return
 
-    # 성능검사 실행
-    # 성능검사 통과했으면, 약품 투입 횟수 최솟값 업데이트
-    if check(arr) is True:
-        min_v = min(min_v, cnt)
-        return
 
     # 원본 행 저장
     original_row = arr[n]
@@ -80,3 +86,8 @@ for test_case in range(1, 1+T):
     dfs(0, 0, arr)
 
     print(f'#{test_case} {min_v}')
+
+
+'''
+DFS는 무조건 현재 상태가 답이 될 수 있는지를 가장 먼저 검사하자...
+'''
