@@ -1,7 +1,6 @@
 import sys
 sys.stdin = open('input.txt', 'r')
 
-
 '''
 일꾼 수는 2명으로 고정.
 결국 가로2칸으로 C내에서 최대인 값 찾기?
@@ -14,13 +13,17 @@ N과 M이 작으니까 완전탐색으로 가능할 듯
 꿀채취값을 내림차순으로 2개 고르면 되지않을까?
 dfs
 영역은 왼->오로 측정
+heapq 사용
+
+인덱스 기준으로 "이 영역에서 채취할 수 있는 꿀의 최댓값 구하기"
+하나의 값 고르는 순간 다른 못고르는 값들 생기므로 전부 다 따져봐야함
 '''
 
 
-def make_subset(lst):
-    print(f'input_lst = {lst}')
+def find_area_max(lst):
+    # print(f'input_lst = {lst}')
     L = len(lst)
-    max_lst = []
+    max_v = 0
     for i in range(1<<L):       # 부분집합의 개수
         if i == 0:      # 공집합 제거
             continue
@@ -34,32 +37,58 @@ def make_subset(lst):
                 if sum_temp > C:
                     temp_subset = []
                     break
-        print(temp_subset)
         # 원소들 제곱해서 더해보기
         sum_v = sum(map(lambda x:x**2, temp_subset))
-        # 최댓값 업데이트
-        if len(max_lst) < 2:
-            max_lst.append(sum_v)
+        # 최댓값으로 업데이트
+        max_v = max(max_v, sum_v)
 
-        else:
-            for mm in max_lst:
-                if mm <
-                    # 아 이거 하나 고르면 다른거 고를때 영향 줄수도 있겠다.. ㅅㅂ
+    return max_v
 
 
+def make_max_honey_lst():
+    # max_honey_lst
+    max_honey_lst = []
+
+    # 인덱스 마다 가능한 최댓값 구하기
+    for i in range(N):
+        for j in range(N - (M - 1)):
+            # 현재 인덱스 기준 영역들의 꿀 리스트 만들기
+            honey_lst = arr[i][j:j + M]
+
+            # 이 인덱스 기준에서 영역에서의 최댓값 구하기
+            max_v = find_area_max(honey_lst)
+
+            max_honey_lst.append((max_v, i, j))
+
+    # 정렬
+    max_honey_lst.sort(key=lambda x: x[0], reverse=True)  # 튜플의 첫번째 값을 기준으로 내림차순으로 정렬
+    # print(max_honey_lst)
+
+    return max_honey_lst
 
 
-def dfs(i, j):
-    # 현재 인덱스 기준 영역들의 꿀 리스트 만들기
-    honey_lst = []
-    for jj in range(j, j + M):
-        honey_lst.append(arr[i][jj])
-    # print(honey_lst)
+def solve():
 
-    # C에 걸러진 부분집합 만들기
-    make_subset(honey_lst)
+    max_honey_lst = make_max_honey_lst()
+    # print(max_honey_lst)
+    L = len(max_honey_lst)
+    max_vv = 0
 
+    for p1 in range(L):      # 제일 큰 값([0])을 먼저 보고,
+        for p2 in range(p1+1, L):      # 영역이 안 겹치는 선에서 두 번째로 큰 값 고르기
+            p1_i, p1_j = max_honey_lst[p1][1], max_honey_lst[p1][2]
+            p2_i, p2_j = max_honey_lst[p2][1], max_honey_lst[p2][2]
 
+            if p1_i == p2_i and p1_j + M > p2_j:     # 영역이 겹친다면 pass
+                continue
+
+            # 영역이 안 겹친다면, 그때의 p1과 p2 인덱스의 max_v의 합이 최대
+            temp_max = max_honey_lst[p1][0] + max_honey_lst[p2][0]
+            # 최댓값 초기화
+            max_vv = max(max_vv, temp_max)
+            break
+
+    return max_vv
 
 
 
@@ -71,6 +100,6 @@ for test_case in range(1, 1+T):
 
     arr = [list(map(int, input().split())) for _ in range(N)]
 
-    for i in range(N):
-        for j in range(N-(M-1)):
-            dfs(i, j)
+    ans = solve()
+
+    print(f'#{test_case} {ans}')
