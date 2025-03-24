@@ -29,7 +29,7 @@ def prim(start_node):
         for next_node in range(V):
             cost = graph[node][next_node]
             
-            # 갈 수 없는 경우 or 이미 방문한 경우 pass
+            # 갈 수 없는 경우(인접 행렬이기에 생김) or 이미 방문한 경우 pass
             if cost == 0 or MST[next_node]:
                 continue
 
