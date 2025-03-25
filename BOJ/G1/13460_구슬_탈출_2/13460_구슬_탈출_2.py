@@ -1,5 +1,6 @@
 import sys, pprint
 sys.stdin = open('input.txt', 'r')
+from collections import deque
 
 '''
 빨간공과 파란공이 동시에 움직인다.
@@ -11,8 +12,21 @@ sys.stdin = open('input.txt', 'r')
 '''
 
 
-def bfs():
+def bfs(red_i, red_j, blue_i, blue_j):
+    # 초기 deque 만들기
+    dq = [(red_i, red_j), (blue_i, blue_j)]
 
+    while dq:
+        dq.pop()
+
+
+
+
+
+
+
+
+    pass
 
 
 N, M = map(int, input().split())
