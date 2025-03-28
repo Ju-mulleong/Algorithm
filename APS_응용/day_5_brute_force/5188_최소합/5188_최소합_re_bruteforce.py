@@ -6,37 +6,33 @@ sys.stdin = open('input.txt', 'r')
 '''
 
 
-def bfs(start_i, start_j):
-    # q 만들기
-    q = [start_i, start_j]
+def dfs(node_i, node_j, sum_v):
+    global min_v
+    # 종료조건
+    if node_i == N-1 and node_j == N-1:
+        # 최솟값 업데이트
+        min_v = min(min_v, sum_v)
 
-    # 가중치 합계 기록할 visited 만들기
-    visited = [[0]*N for _ in range(N)]
-    visited[start_i][start_j] = arr[start_i][start_j]
+    # 가지치기
+    # 만약 이미 현재 시점 기준 최솟값보다 sum_v가 크거나 같다면, return
+    if min_v <= sum_v:
+        return
 
-    while q:
-        # deQueue
-        cur_i, cur_j = q.pop()
+    # 재귀
+    # 델타 적용한 방향으로 이동(우, 하)
+    di = [0, 1]
+    dj = [1, 0]
 
-        # 델타 적용(우, 하)
-        di = [0, 1]
-        dj = [1, 0]
+    for d in range(2):
+        ni = node_i + di[d]
+        nj = node_j + dj[d]
 
-        for d in range(2):
-            ni = cur_i + di[d]
-            nj = cur_j + dj[d]
+        # 정상인덱스일때만 실행
+        if ni < 0 or ni >= N or nj < 0 or nj >= N:
+            continue
 
-            # 정상인덱스일 때만 실행
-            if ni < 0 or ni >= N or nj < 0 or nj >= N:
-                continue
+        dfs(ni, nj, sum_v + arr[ni][nj])
 
-            if
-
-
-
-
-
-    pass
 
 T = int(input())
 
@@ -45,4 +41,7 @@ for test_case in range(1, 1+T):
 
     arr = [list(map(int, input().split())) for _ in range(N)]
 
-    bfs(0, 0)
+    min_v = float('inf')
+    dfs(0, 0, arr[0][0])
+
+    print(f'#{test_case} {min_v}')
