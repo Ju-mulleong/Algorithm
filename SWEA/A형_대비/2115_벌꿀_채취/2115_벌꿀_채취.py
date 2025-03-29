@@ -62,7 +62,7 @@ def make_max_honey_lst():
 
     # 정렬
     max_honey_lst.sort(key=lambda x: x[0], reverse=True)  # 튜플의 첫번째 값을 기준으로 내림차순으로 정렬
-    # print(max_honey_lst)
+    print(max_honey_lst)
 
     return max_honey_lst
 

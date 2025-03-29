@@ -9,17 +9,13 @@ DFS?
 
 
 def mark_visited(i, j):
-    global visited_row, visited_col, visited_arr, N
-    # 행 visited 처리
-    visited_row[i] = 1
-
-    # 열 visited 처리
-    visited_col[j] = 1
-
+    global visited_arr
     # 대각선 visited 처리
     di = [-1, -1, 1, 1]
     dj = [1, -1, -1, 1]
     flag_d = [True, True, True, True]
+
+    visited_arr[i][j] = 1
 
     ccnt = 0
     k = 1
@@ -39,19 +35,15 @@ def mark_visited(i, j):
             visited_arr[ni][nj] = 1
 
         k += 1
-
+    # print(visited_arr)
 
 def dfs(cnt):
-    global visited_row, visited_col, visited_arr, flag
+    global visited_row, visited_col, visited_arr, flag, ans
     # 종료조건
-
-    # 이미 퀸을 N번 놓았으면 이번 dfs 전부 종료
-    if flag == 1:
-        return
 
     # 퀸을 N번 놓으면 종료
     if cnt == N:
-        flag = 1
+        ans += 1
         return
 
     # 재귀
@@ -63,9 +55,18 @@ def dfs(cnt):
             if visited_col[jj] or visited_arr[ii][jj]:
                 continue
 
-            # 중복 표시
+            # 원복용 대각선 visited
+            copied_arr = [[x for x in visited_arr[p]] for p in range(N)]
+
+            visited_row[ii] = 1  # 행 visited 처리
+            visited_col[jj] = 1  # 열 visited 처리
             mark_visited(ii, jj)
             dfs(cnt+1)
+
+            # 원복
+            visited_row[ii] = 0
+            visited_col[jj] = 0
+            visited_arr = copied_arr
 
 
 T = int(input())
@@ -86,9 +87,11 @@ for test_case in range(1, 1+T):
             flag = 0
 
             # 처음에 놓을 퀸의 가로, 세로, 대각선방향 visited 표시
+            visited_row[i] = 1  # 행 visited 처리
+            visited_col[j] = 1  # 열 visited 처리
             mark_visited(i, j)
             dfs(1)
-            if flag:
-                ans += 1
+
+            # 원복안해도 초기화 된다. for로 도니까
 
     print(f'#{test_case} {ans}')
