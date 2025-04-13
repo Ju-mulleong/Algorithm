@@ -93,7 +93,6 @@ def solve(i, j, d):
 T = int(input())
 
 for test_case in range(1, 1+T):
-    N = 
     N = int(input())
     # N*N 크기의 맵
 

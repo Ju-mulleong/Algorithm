@@ -1,18 +1,19 @@
 import sys
-sys.stdin = open('input.txt', 'r')
+sys.stdin = open('input2.txt', 'r')
 
 '''
 족보 구하기
 '''
 
-
+# 스트레이트인가?
 def is_straight():
     global num_lst
-    # 스트레이트인가?
+
     # 로얄 스트레이트인가?
     if num_lst == [1, 10, 11, 12, 13]:
         return True
 
+    # 스트레이트가 아니면 break (return None)
     for i in range(4):
         if num_lst[i]+1 != num_lst[i+1]:
             break
@@ -31,28 +32,26 @@ def solve():
             break
 
     else:
-        if flag:
+        if flag:    # 스트레이트 플러쉬
             return 'Straight Flush'
 
-        else:
-            # 플러쉬
+        else:   # 플러쉬
             return 'Flush'
 
-    if flag:
+    if flag:    # 스트레이트
         return 'Straight'
 
-    # 값으로 결정되는 족보들(포카드, 풀 하우스, 트리플, 투 페어, 원 페어, 하이카드)
+    # 숫자로 결정되는 족보들(포카드, 풀 하우스, 트리플, 투 페어, 원 페어, 하이카드)
     # 카운트 정렬
     count_lst = [0]*14
     for i in range(5):
         count_lst[num_lst[i]] += 1
-    # print(count_lst)
-    # print(start, end)
+    print(f'정렬 전 count_lst = {count_lst}')
 
     # 카운트 정렬한 리스트에서 0 제거
     count_lst = [x for x in count_lst if x != 0]
     count_lst.sort(reverse=True)
-    # print(count_lst)
+    print(f'정렬 후 count_lst = {count_lst}')
 
     if count_lst == [4, 1]:
         return 'Four of a Kind'
@@ -88,7 +87,6 @@ def solve():
 T = int(input())
 
 for test_case in range(1, 1+T):
-    # [(S, 1), (S, 2), (D, 1), (H, 1), (C, 1)] 형태로 저장하기
     suit_lst = []
     num_lst = []
     to_num = {'A': 1, 'T': 10, 'J': 11, 'Q': 12, 'K': 13}
@@ -104,7 +102,8 @@ for test_case in range(1, 1+T):
 
     num_lst.sort()
     suit_lst.sort()
-    # print(num_lst)
-    # print(suit_lst)
+    print(f'num_lst = {num_lst}')
+    print(f'suit_lst = {suit_lst}')
     print(f'#{test_case} {solve()}')
+    print()
 
