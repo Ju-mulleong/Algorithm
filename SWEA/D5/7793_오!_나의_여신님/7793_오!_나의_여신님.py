@@ -1,5 +1,7 @@
-import sys, pprint
+import sys
+from pprint import pprint
 sys.stdin = open('input2.txt', 'r')
+
 from collections import deque
 
 '''
@@ -88,7 +90,7 @@ def bfs():
         if cur_d != pre_d:
             pre_d = cur_d
             devils_hand()
-        # pprint.pprint(devil_arr)
+        # pprint(devil_arr)
 
         # 이동한 위치가 악마의 손아귀에 닿았는지 확인
         if devil_arr[cur_i][cur_j] == 1:
