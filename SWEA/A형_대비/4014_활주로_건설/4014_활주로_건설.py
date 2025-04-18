@@ -15,18 +15,17 @@ for문 따로 만들기 귀찮으니까 배열 자체를 zip으로 전치행렬�
 def is_can_slide(arr, i, lst):
     global cnt
     L = len(lst)
-    # pprint.pprint(copied_arr)
     copied_arr = [row[:] for row in arr]
+    pprint.pprint(copied_arr)
     # nonlocal 사용하기 위해 중첩함수로 작성
     # 같은 연속된 값들의 끝 인덱스만 전달받기(또는 단일)
     # d가 +1 이면 우 확인, d가 -1이면 좌 확인
 
     def check(i, j, d):
-        nonlocal copied_arr
         height = arr[i][j]
-        # print(copied_arr)
-        # print(f'i = {i}, j={j}, d={d}')
-        # print(copied_arr[i][j+d])
+        print(copied_arr)
+        print(f'i={i}, j={j}, d={d}')
+        print(copied_arr[i][j+d])
         for x in range(X):
             # 비정상인덱스면 경사로 못지음
             if j+d < 0 or j+d >= N:
@@ -37,7 +36,9 @@ def is_can_slide(arr, i, lst):
                 return False
             # 활주로 지으면 음수로 바꿔서 표시.
             else:
+                print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
                 copied_arr[i][j + d] = -(height - 1)
+                print(copied_arr)
 
         return True
     # 값이 높은 인덱스부터 살펴본다.
@@ -47,17 +48,17 @@ def is_can_slide(arr, i, lst):
     modified_lst = []
     c = 0
     while c < L-1:
-        # print(f'c = {c}')
-        # print(lst)
+        print(f'c = {c}')
+        print(lst)
         start = end = lst[c][1]
-        # print(f'start = {start}, end= {end}')
-        # print(lst[c])
+        print(f'start = {start}, end= {end}')
+        print(lst[c])
         # 같은 높이가 연속된다면
         if lst[c][0] == lst[c+1][0] and abs(lst[c][1] - lst[c+1][1]) == 1:
             end = lst[c][1]
             start = lst[c+1][1]
             n = 1
-            # print(f'start = {start}, end= {end}')
+            print(f'start = {start}, end= {end}')
             while c+1+n < L-2 and lst[c+1][0] == lst[c+1+n][0]:
                 start = lst[c+1+n][1]
                 n += 1
@@ -65,7 +66,7 @@ def is_can_slide(arr, i, lst):
 
         modified_lst.append((start, end))
         c += 1
-        # print(f'modified_lst = {modified_lst}')
+        print(f'modified_lst = {modified_lst}')
 
     for cur in range(L):
         s, e = modified_lst[cur][0], modified_lst[cur][1]
@@ -88,7 +89,6 @@ def is_can_slide(arr, i, lst):
 
     # 전부 통과하면, 활주로 지은 것
     cnt += 1
-
 
 
 def solve(arr):
