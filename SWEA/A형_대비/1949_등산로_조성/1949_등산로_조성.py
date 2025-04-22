@@ -122,6 +122,5 @@ for test_case in range(1, 1+T):
         dfs(i, j)
         visited[i][j] = 0
 
-
     # pprint.pprint(visited)
     print(f'#{test_case} {max_v}')

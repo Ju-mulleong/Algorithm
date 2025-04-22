@@ -9,6 +9,7 @@ sys.stdin = open('graph.txt', 'r')
 # 넣을때 visited = 1하면 안된다!!!
 #
 
+
 def prim(start_node):
     pq = [(0, start_node)]  # 시작점은 가중치가 0이다. 시작노드의 가중치, 시작노드
     MST = [0] * V       # visited와 동일
