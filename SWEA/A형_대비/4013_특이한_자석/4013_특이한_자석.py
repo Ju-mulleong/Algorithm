@@ -14,6 +14,26 @@ from collections import deque
 '''
 
 
+def check(checked, check_rotate, cur_num, cur_r, direction):
+    # direction 에 따라 함수 한번만 호출하고 체크 여러번 수행할 수 있도록
+
+    if 'R' in direction:
+        # 현재 자석 기준 오른쪽 자석 확인
+        if magnets[cur_num][2] + magnets[cur_num + 1][6] == 1:
+            # 체크 안했으면, 체크 실행
+            if checked[cur_num + 1] == 0:
+                check_rotate.append((cur_num + 1, -cur_r))
+                checked[cur_num + 1] = -cur_r
+
+    if 'L' in direction:
+        # 현재 자석 기준 왼쪽 자석 확인
+        if magnets[cur_num][6] + magnets[cur_num - 1][2] == 1:
+            # 체크 안했으면, 체크 실행
+            if checked[cur_num - 1] == 0:
+                check_rotate.append((cur_num - 1, -cur_r))
+                checked[cur_num - 1] = -cur_r
+
+
 def solve(m_num, m_r):
     global magnets
 
@@ -29,35 +49,18 @@ def solve(m_num, m_r):
 
         # 자석이 2번, 3번이면 오른쪽 왼쪽 둘 다 봐야됨.
         if cur_num in (2, 3):
-
-            # 현재 자석 기준 오른쪽 자석 확인
-            if magnets[cur_num][2] + magnets[cur_num+1][6] == 1:
-                # 체크 안했으면, 체크 실행
-                if checked[cur_num+1] == 0:
-                    check_rotate.append((cur_num+1, -cur_r))
-                    checked[cur_num+1] = -cur_r
-
-            # 현재 자석 기준 왼쪽 자석 확인
-            if magnets[cur_num][6] + magnets[cur_num-1][2] == 1:
-                if checked[cur_num-1] == 0:
-                    check_rotate.append((cur_num-1, -cur_r))
-                    checked[cur_num - 1] = -cur_r
+            # 왼쪽, 오른쪽 확인
+            check(checked, check_rotate, cur_num, cur_r, 'LR')
 
         # 1번 자석이라면, 오른쪽만 확인
         elif cur_num == 1:
             # 현재 자석 기준 오른쪽 자석 확인
-            if magnets[cur_num][2] + magnets[cur_num+1][6] == 1:
-                if checked[cur_num+1] == 0:
-                    check_rotate.append((cur_num+1, -cur_r))
-                    checked[cur_num + 1] = -cur_r
+            check(checked, check_rotate, cur_num, cur_r, 'R')
 
         # 4번 자석이라면, 왼쪽만 확인
         else:
             # 현재 자석 기준 왼쪽 자석 확인
-            if magnets[cur_num][6] + magnets[cur_num - 1][2] == 1:
-                if checked[cur_num-1] == 0:
-                    check_rotate.append((cur_num - 1, -cur_r))
-                    checked[cur_num - 1] = -cur_r
+            check(checked, check_rotate, cur_num, cur_r, 'L')
 
         # print(checked)
 
@@ -86,7 +89,6 @@ for test_case in range(1, 1+T):
 
     magnets = [[0], magnet_1, magnet_2, magnet_3, magnet_4]
     # print(magnets)
-
 
     # (회전시키는 자석의 번호, 회전방향)의 쌍이 K번 주어진다.
     # 1칸 회전!!!
