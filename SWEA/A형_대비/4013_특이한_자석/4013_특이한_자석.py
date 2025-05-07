@@ -38,8 +38,8 @@ def solve(m_num, m_r):
     global magnets
 
     # deque의 메서드 .rotate(n) 사용, n만큼 q를 회전시키는 것처럼 q의 원소들 인덱스 변경
-    check_rotate = deque([(m_num, m_r)])  # 연동되어서 회전하는 자석 있는지 확인 위한 리스트
-    checked = [0] * 5  # 회전 확정된 자석 리스트 (더미 0 포함)
+    check_rotate = deque([(m_num, m_r)])    # 연동되어서 회전하는 자석 있는지 확인 위한 리스트
+    checked = [0]*5     # 회전 확정된 자석 리스트 (더미 0 포함)
     checked[m_num] = m_r
 
     # 현재 회전시켜야되는 자석과 맞닿아있는 자석날 확인
@@ -62,23 +62,21 @@ def solve(m_num, m_r):
             # 현재 자석 기준 왼쪽 자석 확인
             check(checked, check_rotate, cur_num, cur_r, 'L')
 
-        print(f'checked = {checked}')
+        # print(checked)
 
     # 회전시키기
     for i in range(1, 5):
         if checked[i] == 1:
             magnets[i].rotate(1)
-            print(f'{i}번 자석을 시계방향으로 회전!')
-            print(magnets)
         elif checked[i] == -1:
             magnets[i].rotate(-1)
-            print(f'{i}번 자석을 반시계로 회전!')
-            print(magnets)
+
+    # print(magnets)
 
 
 T = int(input())
 
-for test_case in range(1, 1 + T):
+for test_case in range(1, 1+T):
     # 자석을 회전시키는 횟수 K
     K = int(input())
 
@@ -90,7 +88,7 @@ for test_case in range(1, 1 + T):
     magnet_4 = deque(list(map(int, input().split())))
 
     magnets = [[0], magnet_1, magnet_2, magnet_3, magnet_4]
-    print(magnets)
+    # print(magnets)
 
     # (회전시키는 자석의 번호, 회전방향)의 쌍이 K번 주어진다.
     # 1칸 회전!!!
@@ -101,7 +99,6 @@ for test_case in range(1, 1 + T):
     # 점수 확인
     score = [1, 2, 4, 8]
     # print(magnets)
-    ans = magnet_1[0] * score[0] + magnet_2[0] * score[1] + magnet_3[0] * score[2] + magnet_4[0] * score[3]
+    ans = magnet_1[0]*score[0] + magnet_2[0]*score[1] + magnet_3[0]*score[2] + magnet_4[0]*score[3]
 
     print(f'#{test_case} {ans}')
-    print()

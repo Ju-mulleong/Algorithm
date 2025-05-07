@@ -1,9 +1,5 @@
-import sys
-sys.stdin = open('input.txt', 'r')
-
-'''
-
-'''
+# import sys
+# sys.stdin = open('input.txt', 'r')
 
 
 # dfs(모음의 개수, 자음의 개수)
@@ -19,7 +15,6 @@ def dfs(i, j, idx, password):
             return
         print(password)
         return
-
 
     for ii in range(idx, C):
         # 이번 글자가 모음이라면,
@@ -68,16 +63,5 @@ for i in range(C):
 len_c = len(lst_c)
 len_v = len(lst_v)
 
-# # 모음 개수 정하기
-# for i in range(1, len_c+1): # 모음의 개수 1개부터 ~ 전체
-#     # 모음 개수가 암호 길이 넘어가면 안 된다.
-#     if i > L:
-#         break
-#
-#     # 자음 개수 정하기
-#     j = L-i
-#     # 자음 개수 2보다 작으면 안 된다. or 전체 주어진 자음개수 넘어가면 안된다.
-#     if j < 2 or j > len_v:
-#         break
 
 dfs(0, 0, 0, '')
