@@ -1,8 +1,9 @@
-import sys
-from pprint import pprint
+import sys, pprint
 sys.stdin = open('input2.txt', 'r')
 
 from collections import deque
+
+pp = pprint.PrettyPrinter(width=30)
 
 '''
 'S'는 수연이의 위치
@@ -27,7 +28,7 @@ from collections import deque
 1초에 1칸 이동하므로, 최소 시간은 최소 거리와 같다.
 '''
 
-
+# 수연이 처음 위치 찾기, 악마의 손아귀, 돌, 여신의공간 표시, 표시된 인덱스 저장
 def find_idx():
     global devil_idx, devil_arr
     for i in range(N):
@@ -39,7 +40,7 @@ def find_idx():
                 devil_arr[i][j] = 1
             elif arr[i][j] in ('D', 'X'):
                 devil_arr[i][j] = -1
-
+    pp.pprint(devil_arr)
     return s_i, s_j
 
 
@@ -78,11 +79,11 @@ def bfs():
     while dq:
         # deQueue
         cur_d, cur_i, cur_j = dq.popleft()
-        # print(cur_d)
+        print(cur_d)
 
-        # 여신님에 닿으면, 최소시간 업데이트 시도하고 q에서 제거
+        # 여신님에 닿으면, 최소시간 업데이트 시도하고 dq에서 제거
         if arr[cur_i][cur_j] == 'D':
-            # print(cur_i, cur_j)
+            print(cur_i, cur_j)
             min_v = min(min_v, cur_d)
             continue
 
@@ -90,7 +91,7 @@ def bfs():
         if cur_d != pre_d:
             pre_d = cur_d
             devils_hand()
-        # pprint(devil_arr)
+        pp.pprint(devil_arr)
 
         # 이동한 위치가 악마의 손아귀에 닿았는지 확인
         if devil_arr[cur_i][cur_j] == 1:
@@ -126,7 +127,7 @@ for test_case in range(1, 1+T):
 
     # 맵
     arr = [list(input()) for _ in range(N)]
-    # print(arr)
+    pp.pprint(arr)
 
     di = [0, -1, 0, 1]
     dj = [1, 0, -1, 0]
