@@ -4,7 +4,7 @@
 ```
 D2/
  ├── ProblemNumber1_ProblemName1
- │    ├── ProblemNumber_ProblemName.py
+ │    ├── ProblemNumber1_ProblemName1.py
  │    ├── input.txt
  │    ├── input2.txt
  │    ├── output.txt
