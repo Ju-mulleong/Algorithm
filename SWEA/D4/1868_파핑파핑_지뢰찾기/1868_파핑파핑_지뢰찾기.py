@@ -1,6 +1,7 @@
 import sys
 sys.stdin = open('input2.txt', 'r')
-
+from pprint import pprint
+from collections import deque
 
 '''
 지뢰찾기
@@ -28,16 +29,40 @@ dj = [1, 1, 0, -1, -1, -1, 0, 1]
 
 
 def bfs(i, j):
-    # 내 주변으로 8방향 델타 확인
-    for d in range(8):
-        ni = i + di[d]
-        nj = j + dj[d]
-        # 정상인덱스 체크
-        if ni < 0 or ni >= N or nj < 0 or nj >= N:
-            continue
+    global need_click
+    dq = deque([(i, j)])
 
+    # visited같은 느낌의 방문 표시, 0 연쇄로 터질때 중복해서 세지 않도록 표시
+    arr[i][j] = -1
 
+    while dq:
+        i, j = deque.popleft(dq)
 
+        # visited같은 느낌의 방문 표시, 0 연쇄로 터질때 중복해서 세지 않도록 표시
+        arr[i][j] = -1
+
+        # 내 주변으로 8방향 델타 확인
+        for d in range(8):
+            ni = i + di[d]
+            nj = j + dj[d]
+            # 정상인덱스 체크
+            if ni < 0 or ni >= N or nj < 0 or nj >= N:
+                continue
+
+            # 중복 체크
+            if arr[ni][nj] == -1:
+                continue
+
+            # 이 방향의 칸이 0이라면, enQueue
+            elif arr[ni][nj] == 0:
+                dq.append((ni, nj))
+
+            # 이 칸은 클릭 안해도 됨.
+            need_click -= 1
+            print((i, j), need_click)
+
+            # visited같은 느낌의 방문 표시, 0 연쇄로 터질때 중복해서 세지 않도록 표시
+            arr[ni][nj] = -1
 
 
 T = int(input())
@@ -46,13 +71,22 @@ for test_case in range(1, 1+T):
     # N*N 크기의 표
     N = int(input())
 
-    # 숫자 표시할 temp_arr
-    temp_arr = [[0]*N for _ in range(N)]
+    # 숫자 표시할 arr
+    arr = [[0]*N for _ in range(N)]
 
+    # 지뢰/숫자 표시하기
+    # cnt_mine = 지뢰 수
+    cnt_mine = 0
     for i in range(N):
         temp_lst = list(input())
         for j in range(N):
             if temp_lst[j] == '*':
+                # 지뢰 표시
+                arr[i][j] = '*'
+
+                # cnt_mine 더하기
+                cnt_mine += 1
+
                 # 지뢰라면, 8방향으로 숫자 표시
                 for d in range(8):
                     ni = i + di[d]
@@ -60,24 +94,22 @@ for test_case in range(1, 1+T):
                     # 정상인덱스 체크
                     if ni < 0 or ni >= N or nj < 0 or nj >= N:
                         continue
-                    temp_arr[ni][nj] = temp_arr[ni][nj] + 1
-    print(temp_arr)
+                    # 해당 방향 땅이 지뢰가 아니라면, 숫자 표시
+                    if arr[ni][nj] != '*':
+                        arr[ni][nj] = arr[ni][nj] + 1
+    pprint(arr)
 
 
+    # 만약 0이 존재하지 않는다면, 모든 지뢰가 아닌 칸들을 한 번씩 눌러야 답임.
+    need_click = N*N - cnt_mine
+    print(f'need_click = {need_click}')
 
+    # 전체 순회해서 0인 칸 연쇄 작용 하도록
+    for i in range(N):
+        for j in range(N):
+            if arr[i][j] == 0:
+                bfs(i, j)
 
+    print(f'need_click = {need_click}')
 
-
-    # arr = [list(input()) for _ in range(N)]
-    # # print(arr)
-    #
-    # cnt = 0
-    # for i in range(N):
-    #     for j in range(N):
-    #         # 만약 내 위치가 지뢰라면, cnt += 1, not_zero 표시
-    #         if arr[i][j] == '*':
-    #             cnt += 1
-    #
-    #         # 아니라면, 내 주변 8방향 확인
-    #         else:
-    #             bfs(i, j)
+    print(f'#{test_case} {need_click}')
